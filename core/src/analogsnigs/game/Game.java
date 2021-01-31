@@ -55,5 +55,6 @@ public class Game extends ApplicationAdapter {
 	public void dispose () {
 		batch.dispose();
 		TEXTURE_SHEET.dispose();
+		currentScene.quit();
 	}
 }

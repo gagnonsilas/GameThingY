@@ -20,11 +20,13 @@ public class GameScene implements Scene{
     @Override
     public void run() {
         player.update();
+        Character.moveCharacters();
         client.sendCharacter();
     }
 
     @Override
     public void quit() {
+        System.out.println("quit");
         client.disconnect();
     }
 }

@@ -20,6 +20,7 @@ public class Player {
 
         if(Gdx.input.isKeyPressed(Input.Keys.W)) {
             character.yPos += speed * deltaTime;
+
         }
         if(Gdx.input.isKeyPressed(Input.Keys.S)) {
             character.yPos -= speed * deltaTime;

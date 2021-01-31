@@ -36,19 +36,16 @@ public class Character extends GameObject{
         this.yPos = setY;
         setX = xPos;
         setY = yPos;
-        moveX = (setX - this.xPos) * 20;
-        moveY = (setY - this.yPos) * 20;
+        moveX = 1;
+        moveY = 1;
     }
 
     public void update() {
-        if(Math.abs(setX - xPos) > Math.abs(xPos + moveX * Gdx.graphics.getDeltaTime())) {
-            moveX = 0;
-            moveY = 0;
-            xPos = setX;
-            yPos = setY;
-        }
-        xPos += moveX * Gdx.graphics.getDeltaTime();
-        yPos += moveY * Gdx.graphics.getDeltaTime();
+        moveX = moveX == 1 && !(Math.abs(setX - xPos) < 1)?1:0;
+        moveY = moveY == 1 && !(Math.abs(setY - yPos) < 1)?1:0;
+
+        xPos += (setX - xPos) / 4 * moveX;
+        yPos += (setY - yPos) / 4 * moveY;
     }
 
     public static void moveCharacters() {
@@ -59,6 +56,7 @@ public class Character extends GameObject{
 
     public void deleteCharacter() {
         characters.remove(this);
+        removeFromDrawable(1);
     }
 
     public static Character findCharacterByName(String name) {
