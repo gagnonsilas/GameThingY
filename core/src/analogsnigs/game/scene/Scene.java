@@ -6,4 +6,6 @@ public interface Scene {
     void run();
 
     void quit();
+
+    int[] getOffset();
 }
