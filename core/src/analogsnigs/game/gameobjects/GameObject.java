@@ -18,8 +18,9 @@ public class GameObject {
     public int width;
     public int height;
     public Collider collider;
+    public int drawingLayer;
 
-    public void addToDrawable(int drawingLayer) {
+    public void addToDrawable() {
         switch (drawingLayer) {
             case 1:
                 drawableObjects.add(this);
@@ -33,7 +34,7 @@ public class GameObject {
 
     }
 
-    public void removeFromDrawable(int drawingLayer) {
+    public void removeFromDrawable() {
         switch (drawingLayer) {
             case 1:
                 drawableObjects.removeValue(this, true);
@@ -50,6 +51,11 @@ public class GameObject {
         drawableObjects = new Array<>();
         backgroundObjects = new Array<>();
         foregroundObjects = new Array<>();
+    }
+
+    public void delete() {
+        collider.delete();
+        removeFromDrawable();
     }
 
 }

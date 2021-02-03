@@ -2,7 +2,6 @@ package analogsnigs.game.gameobjects;
 
 import analogsnigs.game.Game;
 import analogsnigs.game.utilities.Collider;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import java.util.ArrayList;
@@ -26,7 +25,8 @@ public class Character extends GameObject{
         this.height = height;
         this.collider = new Collider(this, false);
         this.name = name;
-        addToDrawable(1);
+        this.drawingLayer = 1;
+        addToDrawable();
         this.textureRegion = new TextureRegion(Game.TEXTURE_SHEET, 0, 16, 16, 16);
         characters.add(this);
     }
@@ -56,7 +56,7 @@ public class Character extends GameObject{
 
     public void deleteCharacter() {
         characters.remove(this);
-        removeFromDrawable(1);
+        removeFromDrawable();
     }
 
     public static Character findCharacterByName(String name) {

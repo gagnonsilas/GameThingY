@@ -1,6 +1,7 @@
 package analogsnigs.game.client;
 
 import analogsnigs.game.player.Player;
+import analogsnigs.game.utilities.Map;
 import com.github.czyzby.websocket.WebSocket;
 import com.github.czyzby.websocket.WebSocketListener;
 import com.github.czyzby.websocket.WebSockets;
@@ -9,6 +10,8 @@ import analogsnigs.game.gameobjects.Character;
 
 public class Client {
     WebSocket socket;
+
+    Map map;
 
     public Client() {
         socket = WebSockets.newSocket("wss://analog-snigs-games.herokuapp.com");
@@ -61,11 +64,13 @@ public class Client {
             characterUpdate(packet.substring(2));
         }
         else if(packet.contains("#2")) {
-            System.out.println(packet.substring(2));
             addCharacter(packet.substring(2));
         }
         else if(packet.contains("#3")) {
             System.out.println(packet.substring(2));
+        }
+        else if(packet.contains("#4")) {
+            loadMap(stringTo2DArray(packet.substring(2)));
         }
 
 
@@ -83,10 +88,15 @@ public class Client {
 
         int[][] outputArray = new int[inputSplit2.length][inputSplit2[0].length];
 
-        for (int i = 0; i < inputSplit2.length; i++) {
-            for (int j = 0; j < inputSplit2[i].length; j++) {
-                outputArray[i][j] = Integer.parseInt(inputSplit2[i][j]);
+        try{
+            for (int i = 0; i < inputSplit2.length; i++) {
+                for (int j = 0; j < inputSplit2[i].length; j++) {
+                    outputArray[i][j] = Integer.parseInt(inputSplit2[i][j]);
+                }
             }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
         }
 
         return outputArray;
@@ -125,5 +135,9 @@ public class Client {
     public void disconnect() {
         System.out.println("closing");
         WebSockets.closeGracefully(socket);
+    }
+
+    public void loadMap(int[][] map) {
+        this.map = new Map(map);
     }
 }

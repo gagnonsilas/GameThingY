@@ -11,8 +11,11 @@ public class GameElement extends GameObject{
         this.yPos = yPos;
         this.width = Game.WALL_SIZE;
         this.height = Game.WALL_SIZE;
-        addToDrawable(drawingLayer);
-        collider = new Collider(this, drawingLayer == 1);
+        this.drawingLayer = drawingLayer;
+        addToDrawable();
+        if(drawingLayer == 1) {
+            collider = new Collider(this, true);
+        }
         textureRegion = new TextureRegion(Game.TEXTURE_SHEET, textureX * 16, textureY * 16, 16, 16);
     }
 }

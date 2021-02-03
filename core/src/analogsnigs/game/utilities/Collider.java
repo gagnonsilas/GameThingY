@@ -6,9 +6,9 @@ import java.util.List;
 
 public class Collider {
 
-    private static List<Collider> colliders = new ArrayList<>();
-    private boolean isStatic;
-    private GameObject gameObject;
+    private static final List<Collider> colliders = new ArrayList<>();
+    private final boolean isStatic;
+    private final GameObject gameObject;
 
     public Collider(GameObject gameObject, boolean isStatic) {
         colliders.add(this);
@@ -17,9 +17,9 @@ public class Collider {
     }
 
     public static void checkColliders() {
-        for (Collider collider : colliders) {
-            if(!collider.isStatic) {
-                for (Collider collider1 : colliders) {
+        for (Collider collider : new ArrayList<>(colliders)) {
+            if(!collider.isStatic ) {
+                for (Collider collider1 : new ArrayList<>(colliders)) {
                     if(collider1.isStatic) {
                         if (collider.isOverlapping(collider1)) {
                             collider.unCollide(collider1);
@@ -43,10 +43,7 @@ public class Collider {
         if (x1 >= x2 + w2 || x2 >= x1 + w1) {
             return false;
         }
-        if (y1 >= y2 + h2 || y2 >= y1 + h1) {
-            return false;
-        }
-        return true;
+        return y1 < y2 + h2 && y2 < y1 + h1;
     }
 
     public void unCollide(Collider collider2) {
@@ -69,6 +66,10 @@ public class Collider {
         else {
             gameObject.yPos += yMove;
         }
+    }
+
+    public void delete() {
+        colliders.remove(this);
     }
 
 }
