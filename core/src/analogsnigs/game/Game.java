@@ -1,19 +1,21 @@
 package analogsnigs.game;
 
 import analogsnigs.game.gameobjects.GameObject;
-import analogsnigs.game.scene.GameScene;
+import analogsnigs.game.menu.UIElement;
+import analogsnigs.game.scene.Menu;
 import analogsnigs.game.scene.Scene;
 import analogsnigs.game.utilities.Collider;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.viewport.*;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class Game extends ApplicationAdapter {
 	SpriteBatch batch;
@@ -24,12 +26,15 @@ public class Game extends ApplicationAdapter {
 	private Viewport viewport;
 	private Camera camera;
 
-	private int renderDistance = 10;
+	public static FileHandle fontFile;
+
 
 	
 	@Override
 	public void create () {
 		TEXTURE_SHEET = new Texture("TextureSheet.png");
+
+		fontFile = new FileHandle("font/Pixeled-30.fnt");
 
 		batch = new SpriteBatch();
 
@@ -37,8 +42,7 @@ public class Game extends ApplicationAdapter {
 
 		viewport = new ScreenViewport(camera);
 
-		currentScene = new GameScene();
-
+		currentScene = new Menu();
 	}
 
 	@Override
@@ -57,14 +61,17 @@ public class Game extends ApplicationAdapter {
 		drawObjects(GameObject.backgroundObjects, offset);
 		drawObjects(GameObject.drawableObjects, offset);
 		drawObjects(GameObject.foregroundObjects, new int[]{0,0});
+		for (UIElement element : UIElement.textObjects) {
+			element.font.draw(batch, element.data,
+					element.xPos + element.textPadding * 2,
+					element.yPos + element.height - element.textPadding);
+		}
 		batch.end();
 	}
 
 	public void drawObjects(Array<GameObject> objects, int[] offset) {
 		for (GameObject object : objects) {
-//			if(Math.abs(object.xPos + offset[0]) < renderDistance * WALL_SIZE && Math.abs(object.yPos + offset[1]) < renderDistance * WALL_SIZE) {
-				batch.draw(object.textureRegion, object.xPos + offset[0], object.yPos + offset[1], object.width, object.height);
-//			}
+			batch.draw(object.textureRegion, object.xPos + offset[0], object.yPos + offset[1], object.width, object.height);
 		}
 	}
 	

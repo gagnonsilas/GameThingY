@@ -1,6 +1,7 @@
 package analogsnigs.game.gameobjects;
 
 import analogsnigs.game.utilities.Collider;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 

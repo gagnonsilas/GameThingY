@@ -26,9 +26,9 @@ public class Character extends GameObject{
         this.collider = new Collider(this, false);
         this.name = name;
         this.drawingLayer = 1;
-        addToDrawable();
         this.textureRegion = new TextureRegion(Game.TEXTURE_SHEET, 0, 16, 16, 16);
         characters.add(this);
+        addToDrawable();
     }
 
     public void move(int xPos, int yPos) {

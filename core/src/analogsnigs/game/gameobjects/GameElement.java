@@ -12,10 +12,10 @@ public class GameElement extends GameObject{
         this.width = Game.WALL_SIZE;
         this.height = Game.WALL_SIZE;
         this.drawingLayer = drawingLayer;
-        addToDrawable();
         if(drawingLayer == 1) {
             collider = new Collider(this, true);
         }
         textureRegion = new TextureRegion(Game.TEXTURE_SHEET, textureX * 16, textureY * 16, 16, 16);
+        addToDrawable();
     }
 }

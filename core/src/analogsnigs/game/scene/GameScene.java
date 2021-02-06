@@ -11,8 +11,8 @@ public class GameScene implements Scene{
 
     private final Client client;
 
-    public GameScene() {
-        player = new Player(new Character(100, 100, 45, 45, "Silas"));
+    public GameScene(String name) {
+        player = new Player(new Character(100, 100, 45, 45, name));
         client = new Client();
     }
 
