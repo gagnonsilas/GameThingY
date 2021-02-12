@@ -24,8 +24,8 @@ public class MenuPanel {
         }
     }
 
-    public Button addButton(int x, int y, int width, int height, String text, Consumer<String> method) {
-        Button button = new Button(x, y, width, height, text, method);
+    public Button addButton(float x, float y, int width, int height, String text, Consumer<String> method, String buttonText) {
+        Button button = new Button(x, y, width, height, text, method, buttonText);
         buttons.add(button);
         return button;
     }

@@ -1,6 +1,7 @@
 package analogsnigs.game.gameobjects;
 
 import analogsnigs.game.utilities.Collider;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
@@ -20,6 +21,8 @@ public class GameObject {
     public int height;
     public Collider collider;
     public int drawingLayer;
+
+    public Color color = Color.WHITE;
 
     public void addToDrawable() {
         switch (drawingLayer) {

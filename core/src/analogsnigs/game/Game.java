@@ -17,6 +17,8 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import java.io.File;
+
 public class Game extends ApplicationAdapter {
 	SpriteBatch batch;
 
@@ -29,12 +31,13 @@ public class Game extends ApplicationAdapter {
 	public static FileHandle fontFile;
 
 
+
 	
 	@Override
 	public void create () {
 		TEXTURE_SHEET = new Texture("TextureSheet.png");
 
-		fontFile = new FileHandle("font/Pixeled-30.fnt");
+		fontFile = Gdx.files.internal("font/Pixeled-30.fnt");
 
 		batch = new SpriteBatch();
 
@@ -62,15 +65,16 @@ public class Game extends ApplicationAdapter {
 		drawObjects(GameObject.drawableObjects, offset);
 		drawObjects(GameObject.foregroundObjects, new int[]{0,0});
 		for (UIElement element : UIElement.textObjects) {
-			element.font.draw(batch, element.data,
-					element.xPos + element.textPadding * 2,
-					element.yPos + element.height - element.textPadding);
+			element.font.draw(batch, element.layout,
+					element.xPos + (element.width - element.layout.width) / 2,
+					element.yPos + (element.height + element.layout.height) / 2);
 		}
 		batch.end();
 	}
 
 	public void drawObjects(Array<GameObject> objects, int[] offset) {
 		for (GameObject object : objects) {
+			batch.setColor(object.color);
 			batch.draw(object.textureRegion, object.xPos + offset[0], object.yPos + offset[1], object.width, object.height);
 		}
 	}

@@ -2,6 +2,7 @@ package analogsnigs.game.gameobjects;
 
 import analogsnigs.game.Game;
 import analogsnigs.game.utilities.Collider;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class GameElement extends GameObject{
@@ -12,6 +13,7 @@ public class GameElement extends GameObject{
         this.width = Game.WALL_SIZE;
         this.height = Game.WALL_SIZE;
         this.drawingLayer = drawingLayer;
+        this.color = Color.WHITE;
         if(drawingLayer == 1) {
             collider = new Collider(this, true);
         }

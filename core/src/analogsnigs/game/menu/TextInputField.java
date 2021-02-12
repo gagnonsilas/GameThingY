@@ -7,6 +7,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class TextInputField extends UIElement {
@@ -15,19 +16,27 @@ public class TextInputField extends UIElement {
 
     InputProcessor processor;
 
-    public TextInputField(int x, int y, int width, int height, int inputLength) {
-        this.xPos = x;
-        this.yPos = y;
+    private final float x;
+    private final float y;
+
+    public TextInputField(float x, float y, int width, int height, int inputLength) {
+        this.x = x;
+        this.y = y;
+        this.xPos = (int) ((Gdx.graphics.getWidth() * x) - width / 2);
+        this.yPos = (int) ((Gdx.graphics.getHeight() * y) - height / 2);
         this.width = width;
         this.height = height;
         this.inputLength = inputLength;
         textPadding = (height - 30) / 4;
+        this.color = Color.WHITE;
+
         font = new BitmapFont(Game.fontFile);
         font.getData().setScale(1);
-        font.setColor(Color.WHITE);
+
+        layout = new GlyphLayout(font, data);
 
         drawingLayer = 2;
-        textureRegion = new TextureRegion(Game.TEXTURE_SHEET, 48, 48, 32, 16);
+        textureRegion = new TextureRegion(Game.TEXTURE_SHEET, 0, 64, 16, 16);
         addToDrawable();
         addTextObject();
         processor = new InputProcessor() {
@@ -51,6 +60,7 @@ public class TextInputField extends UIElement {
                 else if(data.length() < inputLength) {
                     data += character;
                 }
+                layout.setText(font, data);
                 return false;
             }
 
@@ -85,6 +95,8 @@ public class TextInputField extends UIElement {
     public void update() {
         int inX = Gdx.input.getX();
         int inY = Gdx.graphics.getHeight() - Gdx.input.getY();
+        this.xPos = (int) ((Gdx.graphics.getWidth() * x) - width / 2);
+        this.yPos = (int) ((Gdx.graphics.getHeight() * y) - height / 2);
         if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
             if (inX > xPos && xPos + width > inX && inY > yPos && yPos + height > inY) {
                 Gdx.input.setInputProcessor(processor);

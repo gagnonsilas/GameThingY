@@ -26,7 +26,6 @@ public class Client {
 
             @Override
             public boolean onClose(WebSocket webSocket, WebSocketCloseCode code, String reason) {
-                System.out.println("closing");
                 return false;
             }
 
@@ -55,7 +54,8 @@ public class Client {
                 Player.character.xPos + "," +
                 Player.character.yPos + "," +
                 Player.character.width + "," +
-                Player.character.height + ",";
+                Player.character.height + "," +
+                Player.character.hue + ",";
         socket.send(output);
     }
 
@@ -111,6 +111,7 @@ public class Client {
             }
             Character.findCharacterByName(characterData[0]).move(Integer.parseInt(characterData[1]),
                     Integer.parseInt(characterData[2]));
+            Character.findCharacterByName(characterData[0]).setHue(Integer.parseInt(characterData[5]));
         }
     }
 
@@ -127,13 +128,13 @@ public class Client {
                         Integer.parseInt(characterData[3]),
                         Integer.parseInt(characterData[4]),
                         Integer.parseInt(characterData[5]),
-                        characterData[0]);
+                        characterData[0],
+                        Integer.parseInt(characterData[6]));
             }
         }
     }
 
     public void disconnect() {
-        System.out.println("closing");
         WebSockets.closeGracefully(socket);
     }
 

@@ -2,11 +2,13 @@ package analogsnigs.game.menu;
 
 import analogsnigs.game.gameobjects.GameObject;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.utils.Array;
 
 public class UIElement extends GameObject{
 
     public String data = "";
+    public GlyphLayout layout;
 
     public BitmapFont font;
 

@@ -5,6 +5,7 @@ import analogsnigs.game.gameobjects.GameObject;
 import analogsnigs.game.menu.MenuPanel;
 import analogsnigs.game.menu.TextInputField;
 import analogsnigs.game.menu.UIElement;
+import com.badlogic.gdx.graphics.Texture;
 
 public class Menu implements Scene {
 
@@ -13,8 +14,8 @@ public class Menu implements Scene {
 
     public Menu() {
        panel = new MenuPanel();
-       panel.addButton(50, 50, 50, 50, "", this::connectToServer)
-       .addLinkedElement(new TextInputField(100, 100, 350, 50, 10));
+       panel.addButton(0.5f, 0.7f, 100, 50, "", this::connectToServer, "PLAY")
+            .addLinkedElement(new TextInputField(0.5f, 0.9f, 350, 50, 10));
     }
 
     @Override

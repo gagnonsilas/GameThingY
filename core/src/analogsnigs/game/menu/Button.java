@@ -1,8 +1,10 @@
 package analogsnigs.game.menu;
 
 import analogsnigs.game.Game;
-import analogsnigs.game.gameobjects.GameObject;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 
@@ -10,18 +12,35 @@ import java.util.function.Consumer;
 
 public class Button extends UIElement {
     Consumer<String> method;
-    private Array<UIElement> elements = new Array<>();
+    private final Array<UIElement> elements = new Array<>();
 
-    public Button (int x, int y, int width, int height, String data, Consumer<String> method) {
-        this.xPos = x;
-        this.yPos = y;
+    private final float x;
+    private final float y;
+
+    public Button (float x, float y, int width, int height, String data, Consumer<String> method, String buttonText) {
+        this.x = x;
+        this.y = y;
+        this.xPos = (int) ((Gdx.graphics.getWidth() * x) - width / 2);
+        this.yPos = (int) ((Gdx.graphics.getHeight() * y) - height / 2);
         this.data = data;
         this.width = width;
         this.height = height;
         this.method = method;
+        this.color = Color.WHITE;
+        font = new BitmapFont(Game.fontFile);
+        font.getData().setScale(0.6f);
+        layout = new GlyphLayout(font, buttonText);
+
+        int textureXPos = 0;
+
+        for (int i = (width / 50) - 1; i > 0; i--) {
+            textureXPos += i;
+        }
+
         drawingLayer = 2;
         addToDrawable();
-        textureRegion = new TextureRegion(Game.TEXTURE_SHEET, 0, 48, 16, 16);
+        addTextObject();
+        textureRegion = new TextureRegion(Game.TEXTURE_SHEET, textureXPos * 16, 48, (width / 50) * 16, 16);
     }
 
     public void addLinkedElement(UIElement linkedElement) {
@@ -32,6 +51,8 @@ public class Button extends UIElement {
         for (UIElement element : elements) {
             element.update();
         }
+        this.xPos = (int) ((Gdx.graphics.getWidth() * x) - width / 2);
+        this.yPos = (int) ((Gdx.graphics.getHeight() * y) - height / 2);
         int inX = Gdx.input.getX();
         int inY = Gdx.graphics.getHeight() - Gdx.input.getY();
         if(inX > xPos && xPos + width > inX && inY > yPos && yPos + height > inY) {

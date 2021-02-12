@@ -2,6 +2,7 @@ package analogsnigs.game.gameobjects;
 
 import analogsnigs.game.Game;
 import analogsnigs.game.utilities.Collider;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import java.util.ArrayList;
@@ -18,7 +19,9 @@ public class Character extends GameObject{
     private int moveX;
     private int moveY;
 
-    public Character(int xPos, int yPos, int width, int height, String name) {
+    public int hue;
+
+    public Character(int xPos, int yPos, int width, int height, String name, int hue) {
         this.xPos = xPos;
         this.yPos = yPos;
         this.width = width;
@@ -27,6 +30,7 @@ public class Character extends GameObject{
         this.name = name;
         this.drawingLayer = 1;
         this.textureRegion = new TextureRegion(Game.TEXTURE_SHEET, 0, 16, 16, 16);
+        setHue(hue);
         characters.add(this);
         addToDrawable();
     }
@@ -66,6 +70,11 @@ public class Character extends GameObject{
             }
         }
 
-        return new Character(0, 0, 45, 45, name);
+        return new Character(0, 0, 45, 45, name, 0);
+    }
+
+    public void setHue(int hue) {
+        this.hue = hue;
+        this.color = new Color(0, 0, 0, 1).fromHsv( hue, 0.3f, 1f);
     }
 }
