@@ -28,6 +28,7 @@ public class GameScene implements Scene{
     public void run() {
         player.update();
         Character.moveCharacters();
+        GameObject.sort();
         client.sendCharacter();
         panel.update();
     }
@@ -51,4 +52,6 @@ public class GameScene implements Scene{
         UIElement.resetTextElements();
         Game.currentScene = new Menu();
     }
+
+
 }

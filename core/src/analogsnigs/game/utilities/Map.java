@@ -29,13 +29,40 @@ public class Map {
 
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map[i].length; j++) {
+
+                int textureX = 0;
+
+                if(map[i][j] == 2) {
+                    continue;
+                }
+                if(map[i][j] == 0) {
+                    textureX = 0;
+                }
+                else if(pos(i, j - 1) == 2) {
+
+                }
+                else if(pos(i - 1,j) == 0 || pos(i - 1,j) == 2) {
+                    textureX = 1;
+                }
+                else {
+                    textureX = 2;
+                }
                 objectMap.add(new GameElement(j * Game.WALL_SIZE,
                         (map.length - i )* Game.WALL_SIZE,
-                        map[i][j],
+                        textureX,
                         0,
                         map[i][j] == 0 || map[i][j] == 9?0:1));
 
             }
+        }
+    }
+
+    public int pos(int i, int j) {
+        if(i < 0 || j < 0 || i >= map.length || j >= map[i].length) {
+            return 2;
+        }
+        else {
+            return map[i][j];
         }
     }
 }

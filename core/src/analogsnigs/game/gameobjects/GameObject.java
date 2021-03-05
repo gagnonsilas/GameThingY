@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 
+import java.util.Comparator;
 
 
 public class GameObject {
@@ -60,6 +61,10 @@ public class GameObject {
     public void delete() {
         collider.delete();
         removeFromDrawable();
+    }
+
+    public static void sort() {
+        drawableObjects.sort((a, b) -> b.yPos - a.yPos);
     }
 
 }

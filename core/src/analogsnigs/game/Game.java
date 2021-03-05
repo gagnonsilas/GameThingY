@@ -17,8 +17,6 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-import java.io.File;
-
 public class Game extends ApplicationAdapter {
 	SpriteBatch batch;
 

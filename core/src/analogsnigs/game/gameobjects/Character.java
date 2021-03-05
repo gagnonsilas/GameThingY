@@ -59,8 +59,8 @@ public class Character extends GameObject{
     }
 
     public void deleteCharacter() {
-        characters.remove(this);
         removeFromDrawable();
+        characters.remove(this);
     }
 
     public static Character findCharacterByName(String name) {
@@ -77,4 +77,9 @@ public class Character extends GameObject{
         this.hue = hue;
         this.color = new Color(0, 0, 0, 1).fromHsv( hue, 0.3f, 1f);
     }
+
+    public static void deleteAll() {
+        characters = new ArrayList<>();
+    }
+
 }

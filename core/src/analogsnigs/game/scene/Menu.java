@@ -5,12 +5,10 @@ import analogsnigs.game.gameobjects.GameObject;
 import analogsnigs.game.menu.MenuPanel;
 import analogsnigs.game.menu.TextInputField;
 import analogsnigs.game.menu.UIElement;
-import com.badlogic.gdx.graphics.Texture;
 
 public class Menu implements Scene {
 
     MenuPanel panel;
-    TextInputField testInputField;
 
     public Menu() {
        panel = new MenuPanel();

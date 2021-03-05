@@ -14,8 +14,8 @@ public class Client {
     Map map;
 
     public Client() {
-        socket = WebSockets.newSocket("wss://analog-snigs-games.herokuapp.com");
-//        socket = WebSockets.newSocket("ws://localhost:8753");
+//        socket = WebSockets.newSocket("wss://analog-snigs-games.herokuapp.com");
+        socket = WebSockets.newSocket("ws://localhost:8753");
         socket.setSendGracefully(true);
         socket.addListener(new WebSocketListener() {
             @Override
@@ -26,6 +26,7 @@ public class Client {
 
             @Override
             public boolean onClose(WebSocket webSocket, WebSocketCloseCode code, String reason) {
+                Character.deleteAll();
                 return false;
             }
 
@@ -72,6 +73,9 @@ public class Client {
         else if(packet.contains("#4")) {
             loadMap(stringTo2DArray(packet.substring(2)));
         }
+        else if(packet.contains("#5")) {
+            loadMenuPanel(packet.substring(2));
+        }
 
 
     }
@@ -116,6 +120,7 @@ public class Client {
     }
 
     public void addCharacter(String packet) {
+
         String[] characters = packet.split("~");
         for (String character : characters) {
             String[] characterData = character.split(",");
@@ -140,5 +145,10 @@ public class Client {
 
     public void loadMap(int[][] map) {
         this.map = new Map(map);
+    }
+
+    public void loadMenuPanel(String packet) {
+        String[] elements = packet.split("~");
+
     }
 }

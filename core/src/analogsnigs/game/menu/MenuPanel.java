@@ -29,4 +29,8 @@ public class MenuPanel {
         buttons.add(button);
         return button;
     }
+
+    public void addUIElements(UIElement element) {
+        uiElements.add(element);
+    }
 }
