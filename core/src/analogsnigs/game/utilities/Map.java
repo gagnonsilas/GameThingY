@@ -39,10 +39,29 @@ public class Map {
                     textureX = 0;
                 }
                 else if(pos(i, j - 1) == 2) {
+                    textureX = pos(i + 1, j) == 1? 3 : 5;
+                }
+                else if(pos(i, j + 1) == 2) {
+                    textureX = pos(i + 1, j) == 1? 4 : 6;
+                }
+                else if(pos(i + 1,j) == 0 || pos(i + 1,j) == 2) {
+                    textureX = 1;
+                }
+                else if (pos(i + 1, j) == 1
+                        && pos(i - 1, j) != 2
+                        && pos(i, j + 1) == 1
+                        && pos(i, j - 1) != 2
+                        && pos(i + 1, j + 1) == 2){
+                    textureX = 7;
 
                 }
-                else if(pos(i - 1,j) == 0 || pos(i - 1,j) == 2) {
-                    textureX = 1;
+                else if (pos(i + 1, j) == 1
+                        && pos(i - 1, j) != 2
+                        && pos(i, j - 1) == 1
+                        && pos(i, j + 1) != 2
+                        && pos(i + 1, j - 1) == 2){
+                    textureX = 8;
+
                 }
                 else {
                     textureX = 2;
