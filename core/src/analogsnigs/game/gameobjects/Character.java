@@ -1,6 +1,7 @@
 package analogsnigs.game.gameobjects;
 
 import analogsnigs.game.Game;
+import analogsnigs.game.menu.TextElement;
 import analogsnigs.game.utilities.Collider;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -21,6 +22,8 @@ public class Character extends GameObject{
 
     public int hue;
 
+    public TextElement nameTag;
+
     public Character(int xPos, int yPos, int width, int height, String name, int hue) {
         this.xPos = xPos;
         this.yPos = yPos;
@@ -33,6 +36,8 @@ public class Character extends GameObject{
         setHue(hue);
         characters.add(this);
         addToDrawable();
+        nameTag = new TextElement(xPos + width / 2, yPos + height + 30, 50, 20, name, 0.5f, true);
+
     }
 
     public void move(int xPos, int yPos) {
@@ -45,6 +50,7 @@ public class Character extends GameObject{
     }
 
     public void update() {
+        nameTag.updatePos(xPos + (width / 2), yPos + height + 15);
         moveX = moveX == 1 && !(Math.abs(setX - xPos) < 1)?1:0;
         moveY = moveY == 1 && !(Math.abs(setY - yPos) < 1)?1:0;
 
@@ -75,7 +81,7 @@ public class Character extends GameObject{
 
     public void setHue(int hue) {
         this.hue = hue;
-        this.color = new Color(0, 0, 0, 1).fromHsv( hue, 0.3f, 1f);
+        this.color = new Color(0, 0, 0, 1).fromHsv( hue, 0.5f, 1f);
     }
 
     public static void deleteAll() {

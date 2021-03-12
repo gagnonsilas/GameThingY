@@ -59,12 +59,17 @@ public class GameObject {
     }
 
     public void delete() {
-        collider.delete();
+        Collider.delete(collider);
         removeFromDrawable();
     }
 
     public static void sort() {
         drawableObjects.sort((a, b) -> b.yPos - a.yPos);
+    }
+
+    public static void resetObjects() {
+        Collider.resetColliders();
+        resetDrawableObjects();
     }
 
 }

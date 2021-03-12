@@ -29,8 +29,7 @@ public class TextInputField extends UIElement {
         this.inputLength = inputLength;
         textPadding = (height - 30) / 4;
         this.color = Color.WHITE;
-
-        font = new BitmapFont(Game.fontFile);
+        font = Game.FONT;
         font.getData().setScale(1);
 
         layout = new GlyphLayout(font, data);

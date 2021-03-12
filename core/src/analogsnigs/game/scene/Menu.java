@@ -14,6 +14,7 @@ public class Menu implements Scene {
        panel = new MenuPanel();
        panel.addButton(0.5f, 0.7f, 100, 50, "", this::connectToServer, "PLAY")
             .addLinkedElement(new TextInputField(0.5f, 0.9f, 350, 50, 10));
+       panel.addButton(0.5f, 0.5f, 200, 50, " ", this::loadMapEditor, "NEW MAP");
     }
 
     @Override
@@ -35,6 +36,12 @@ public class Menu implements Scene {
         GameObject.resetDrawableObjects();
         UIElement.resetTextElements();
         Game.currentScene = new GameScene(userName);
+    }
+
+    public void loadMapEditor(String i) {
+        GameObject.resetDrawableObjects();
+        UIElement.resetTextElements();
+        Game.currentScene = new MapEditor();
     }
 
 

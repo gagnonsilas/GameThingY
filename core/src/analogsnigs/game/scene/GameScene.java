@@ -48,7 +48,7 @@ public class GameScene implements Scene{
 
     public void disconnect(String data) {
         quit();
-        GameObject.resetDrawableObjects();
+        GameObject.resetObjects();
         UIElement.resetTextElements();
         Game.currentScene = new Menu();
     }

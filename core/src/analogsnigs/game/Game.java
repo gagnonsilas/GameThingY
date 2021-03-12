@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -27,6 +28,7 @@ public class Game extends ApplicationAdapter {
 	private Camera camera;
 
 	public static FileHandle fontFile;
+	public static BitmapFont FONT;
 
 
 
@@ -43,7 +45,10 @@ public class Game extends ApplicationAdapter {
 
 		viewport = new ScreenViewport(camera);
 
+		FONT = new BitmapFont(fontFile);
+
 		currentScene = new Menu();
+
 	}
 
 	@Override
@@ -64,8 +69,8 @@ public class Game extends ApplicationAdapter {
 		drawObjects(GameObject.foregroundObjects, new int[]{0,0});
 		for (UIElement element : UIElement.textObjects) {
 			element.font.draw(batch, element.layout,
-					element.xPos + (element.width - element.layout.width) / 2,
-					element.yPos + (element.height + element.layout.height) / 2);
+					element.xPos + (element.width - element.layout.width) / 2 + (element.isOffset? offset[0] : 0),
+					element.yPos + (element.height + element.layout.height) / 2 + (element.isOffset? offset[1] : 0));
 		}
 		batch.end();
 	}

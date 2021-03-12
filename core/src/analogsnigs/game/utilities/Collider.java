@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Collider {
 
-    private static final List<Collider> colliders = new ArrayList<>();
+    private static List<Collider> colliders = new ArrayList<>();
     private final boolean isStatic;
     private final GameObject gameObject;
 
@@ -68,8 +68,12 @@ public class Collider {
         }
     }
 
-    public void delete() {
-        colliders.remove(this);
+    public static void delete(Collider c) {
+        colliders.remove(c);
+    }
+
+    public static void resetColliders() {
+        colliders = new ArrayList<>();
     }
 
 }

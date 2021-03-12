@@ -1,5 +1,6 @@
 package analogsnigs.game.menu;
 
+import analogsnigs.game.Game;
 import analogsnigs.game.gameobjects.GameObject;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
@@ -11,6 +12,8 @@ public class UIElement extends GameObject{
     public GlyphLayout layout;
 
     public BitmapFont font;
+
+    public boolean isOffset = false;
 
     public int textPadding;
 
@@ -43,4 +46,6 @@ public class UIElement extends GameObject{
     public void remove() {
         textObjects.removeValue(this, true);
     }
+
+
 }
