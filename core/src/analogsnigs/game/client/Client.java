@@ -1,5 +1,6 @@
 package analogsnigs.game.client;
 
+import analogsnigs.game.menu.MenuPanel;
 import analogsnigs.game.player.Player;
 import analogsnigs.game.utilities.Map;
 import com.github.czyzby.websocket.WebSocket;
@@ -13,9 +14,11 @@ public class Client {
 
     Map map;
 
+    MenuPanel panel;
+
     public Client() {
-        socket = WebSockets.newSocket("wss://analog-snigs-games.herokuapp.com");
-//        socket = WebSockets.newSocket("ws://localhost:8753");
+//        socket = WebSockets.newSocket("wss://analog-snigs-games.herokuapp.com");
+        socket = WebSockets.newSocket("ws://localhost:8753");
         socket.setSendGracefully(true);
         socket.addListener(new WebSocketListener() {
             @Override
@@ -150,5 +153,12 @@ public class Client {
     public void loadMenuPanel(String packet) {
         String[] elements = packet.split("~");
 
+        panel = new MenuPanel();
+
+
+    }
+
+    public void interact(String s) {
+        socket.send("#2" + Player.character.name);
     }
 }

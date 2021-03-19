@@ -31,10 +31,6 @@ public class UIElement extends GameObject{
         textObjects.add(this);
     }
 
-    public void removeTextObject() {
-        textObjects.removeValue(this, true);
-    }
-
     public void update() {
 
     }

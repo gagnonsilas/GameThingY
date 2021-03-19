@@ -22,6 +22,7 @@ public class GameScene implements Scene{
         client = new Client();
         panel = new MenuPanel();
         panel.addButton(0.05f, 0.94f, 50, 50, ",", this::disconnect, "X");
+        panel.addButton(0.15f, 0.94f, 50, 50, ",", client::interact, "I");
     }
 
     @Override

@@ -65,6 +65,8 @@ public class Character extends GameObject{
     }
 
     public void deleteCharacter() {
+        nameTag.remove();
+
         removeFromDrawable();
         characters.remove(this);
     }
