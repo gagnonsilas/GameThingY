@@ -155,7 +155,24 @@ public class Client {
 
         panel = new MenuPanel();
 
+        for (String element : elements) {
+            String[] properties = element.split(",");
+            panel.addButton(
+                    Float.parseFloat(properties[0]),
+                    Float.parseFloat(properties[1]),
+                    Integer.parseInt(properties[2]),
+                    Integer.parseInt(properties[3]),
+                    properties[4],
+                    this::sendString,
+                    properties[5]
+                            );
+        }
 
+
+    }
+
+    public void sendString(String s) {
+        socket.send("#3" + Player.character.name + "," + s);
     }
 
     public void interact(String s) {
