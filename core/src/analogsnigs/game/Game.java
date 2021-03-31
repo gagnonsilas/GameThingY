@@ -53,7 +53,7 @@ public class Game extends ApplicationAdapter {
 
 	@Override
 	public void render () {
-		Gdx.gl.glClearColor(0.102f, 0.063f, 0.114f, 1);
+		Gdx.gl.glClearColor(0.8f, 0.8f, 0.8f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		currentScene.run();
 		Collider.checkColliders();
