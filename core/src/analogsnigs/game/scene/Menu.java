@@ -12,9 +12,9 @@ public class Menu implements Scene {
 
     public Menu() {
        panel = new MenuPanel();
-       panel.addButton(0.5f, 0.7f, 100, 50, "", this::connectToServer, "PLAY")
-            .addLinkedElement(new TextInputField(0.5f, 0.9f, 350, 50, 10));
-       panel.addButton(0.5f, 0.5f, 200, 50, " ", this::loadMapEditor, "NEW MAP");
+       panel.addButton(0.5f, 0.7f, Game.WALL_SIZE * 2, Game.WALL_SIZE, "", this::connectToServer, "PLAY")
+            .addLinkedElement(new TextInputField(0.5f, 0.9f, Game.WALL_SIZE * 7, Game.WALL_SIZE, 10));
+       panel.addButton(0.5f, 0.5f, 3 * Game.WALL_SIZE, Game.WALL_SIZE, " ", this::loadMapEditor, "NEW MAP");
     }
 
     @Override

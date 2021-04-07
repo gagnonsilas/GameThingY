@@ -29,18 +29,19 @@ public class Button extends UIElement {
         this.color = Color.WHITE;
         font = Game.FONT;
         font.getData().setScale(0.6f);
+        font.setColor(Game.FONT_COLOR);
         layout = new GlyphLayout(font, buttonText);
 
         int textureXPos = 0;
 
-        for (int i = (width / 50) - 1; i > 0; i--) {
+        for (int i = (width / Game.WALL_SIZE) - 1; i > 0; i--) {
             textureXPos += i;
         }
 
         drawingLayer = 2;
         addToDrawable();
         addTextObject();
-        textureRegion = new TextureRegion(Game.TEXTURE_SHEET, textureXPos * 16, 48, (width / 50) * 16, 16);
+        textureRegion = new TextureRegion(Game.TEXTURE_SHEET, textureXPos * 16, 48, (width / Game.WALL_SIZE) * 16, 16);
     }
 
     public void addLinkedElement(UIElement linkedElement) {

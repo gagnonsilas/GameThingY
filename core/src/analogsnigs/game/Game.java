@@ -5,13 +5,11 @@ import analogsnigs.game.menu.UIElement;
 import analogsnigs.game.scene.Menu;
 import analogsnigs.game.scene.Scene;
 import analogsnigs.game.utilities.Collider;
+import analogsnigs.game.utilities.Map;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
@@ -21,21 +19,29 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 public class Game extends ApplicationAdapter {
 	SpriteBatch batch;
 
-	public static final int WALL_SIZE = 50;
+	public static final int WALL_SIZE = 64;
 	public static Scene currentScene;
 	public static Texture TEXTURE_SHEET;
+	public static Texture MAP_TEXTURES;
 	private Viewport viewport;
 	private Camera camera;
 
 	public static FileHandle fontFile;
 	public static BitmapFont FONT;
 
+	public static Color FONT_COLOR = new Color(0.2f, 0.2f, 0.2f, 1);
+
 
 
 	
 	@Override
 	public void create () {
+		// Load all of the assets
 		TEXTURE_SHEET = new Texture("TextureSheet.png");
+
+		MAP_TEXTURES = new Texture("MapTextures.png");
+
+		Map.loadMapAutoTiler();
 
 		fontFile = Gdx.files.internal("font/Pixeled-30.fnt");
 
@@ -53,29 +59,42 @@ public class Game extends ApplicationAdapter {
 
 	@Override
 	public void render () {
-		Gdx.gl.glClearColor(0.8f, 0.8f, 0.8f, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		currentScene.run();
-		Collider.checkColliders();
-
-		int[] offset = currentScene.getOffset();
-
+		// Update camera scaling
 		this.batch.setTransformMatrix(this.camera.view);
 		this.batch.setProjectionMatrix(this.camera.projection);
 
+		// Fill Background color
+		Gdx.gl.glClearColor(0.8f, 0.8f, 0.8f, 1);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+		// Run the update on the scene
+		currentScene.run();
+
+		Collider.checkColliders();
+
+		// Get camera offset for drawing objects at
+		int[] offset = currentScene.getOffset();
+
+
+		// Start drawing batch
 		batch.begin();
+
 		drawObjects(GameObject.backgroundObjects, offset);
 		drawObjects(GameObject.drawableObjects, offset);
 		drawObjects(GameObject.foregroundObjects, new int[]{0,0});
+
+		// Render text elements after all objects.
 		for (UIElement element : UIElement.textObjects) {
 			element.font.draw(batch, element.layout,
 					element.xPos + (element.width - element.layout.width) / 2 + (element.isOffset? offset[0] : 0),
 					element.yPos + (element.height + element.layout.height) / 2 + (element.isOffset? offset[1] : 0));
 		}
+
 		batch.end();
 	}
 
 	public void drawObjects(Array<GameObject> objects, int[] offset) {
+		// Loop through every object in layer and render to screen
 		for (GameObject object : objects) {
 			batch.setColor(object.color);
 			batch.draw(object.textureRegion, object.xPos + offset[0], object.yPos + offset[1], object.width, object.height);

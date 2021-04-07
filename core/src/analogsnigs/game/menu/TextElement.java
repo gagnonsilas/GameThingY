@@ -33,7 +33,7 @@ public class TextElement extends UIElement{
 
     }
 
-    public TextElement (int x, int y, int width, int height, String text, float scale, boolean isOffset) {
+    public TextElement (int x, int y, int width, int height, String text, float scale, boolean isOffset, Color color) {
         this.xPos = x - (width);
         this.yPos = y - (height / 2);
         this.width = width;
@@ -44,7 +44,7 @@ public class TextElement extends UIElement{
 
         font = Game.FONT;
         font.getData().setScale(scale);
-
+        font.setColor(color);
         layout = new GlyphLayout(font, data);
 
         drawingLayer = 2;

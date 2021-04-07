@@ -21,8 +21,8 @@ public class GameScene implements Scene{
         player = new Player(new Character(100, 100, 45, 45, name, (int) Math.round(Math.random() * 360)));
         client = new Client();
         panel = new MenuPanel();
-        panel.addButton(0.05f, 0.94f, 50, 50, ",", this::disconnect, "X");
-        panel.addButton(0.15f, 0.94f, 50, 50, ",", client::interact, "I");
+        panel.addButton(0.05f, 0.94f, Game.WALL_SIZE, Game.WALL_SIZE, ",", this::disconnect, "X");
+        panel.addButton(0.15f, 0.94f, Game.WALL_SIZE, Game.WALL_SIZE, ",", client::interact, "I");
     }
 
     @Override

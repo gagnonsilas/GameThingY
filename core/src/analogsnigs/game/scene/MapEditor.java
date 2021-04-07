@@ -14,7 +14,7 @@ import com.sun.org.apache.xpath.internal.axes.WalkerFactory;
 
 public class MapEditor implements Scene {
 
-    int mapSize = 50;
+    int mapSize = Game.WALL_SIZE;
 
     Map map = new Map(new int[mapSize][mapSize]);
 
@@ -27,16 +27,16 @@ public class MapEditor implements Scene {
     public MapEditor() {
         player = new Player(new Character(mapSize*Game.WALL_SIZE / 2, mapSize*Game.WALL_SIZE / 2, 45, 45, "Bob", (int) Math.round(Math.random() * 360)));
         panel = new MenuPanel();
-        panel.addButton(0.05f, 0.94f, 50, 50, ",", this::exit, "X");
-        panel.addButton(0.15f, 0.94f, 50, 50, " ", this::printMap, "S");
-        panel.addButton(0.25f, 0.94f, 50, 50, "0 ", this::setBrush, "E");
-        panel.addButton(0.35f, 0.94f, 50, 50, "1 ", this::setBrush, "F");
-        panel.addButton(0.45f, 0.94f, 50, 50, "2 ", this::setBrush, "W");
+        panel.addButton(0.05f, 0.94f, Game.WALL_SIZE, Game.WALL_SIZE, ",", this::exit, "X");
+        panel.addButton(0.15f, 0.94f, Game.WALL_SIZE, Game.WALL_SIZE, " ", this::printMap, "S");
+        panel.addButton(0.25f, 0.94f, Game.WALL_SIZE, Game.WALL_SIZE, "0 ", this::setBrush, "E");
+        panel.addButton(0.35f, 0.94f, Game.WALL_SIZE, Game.WALL_SIZE, "1 ", this::setBrush, "F");
+        panel.addButton(0.45f, 0.94f, Game.WALL_SIZE, Game.WALL_SIZE, "2 ", this::setBrush, "W");
 
-        new Barrier(-50, -50, 50, mapSize * Game.WALL_SIZE + 100);
-        new Barrier(-50, 0, mapSize * Game.WALL_SIZE + 100, 50);
-        new Barrier(mapSize * Game.WALL_SIZE , -50, 50, mapSize * Game.WALL_SIZE + 100);
-        new Barrier(-50, mapSize * Game.WALL_SIZE + 50, mapSize * Game.WALL_SIZE + 100, 50);
+        new Barrier(-Game.WALL_SIZE, -Game.WALL_SIZE, Game.WALL_SIZE, mapSize * Game.WALL_SIZE + 100);
+        new Barrier(-Game.WALL_SIZE, 0, mapSize * Game.WALL_SIZE + 100, Game.WALL_SIZE);
+        new Barrier(mapSize * Game.WALL_SIZE , -Game.WALL_SIZE, Game.WALL_SIZE, mapSize * Game.WALL_SIZE + 100);
+        new Barrier(-Game.WALL_SIZE, mapSize * Game.WALL_SIZE + Game.WALL_SIZE, mapSize * Game.WALL_SIZE + 100, Game.WALL_SIZE);
     }
 
 
@@ -79,8 +79,8 @@ public class MapEditor implements Scene {
     public void draw() {
         if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
             int[] offset  = getOffset();
-            int xClick = (Gdx.input.getX() - offset[0]) / 50;
-            int yClick = ((Gdx.graphics.getHeight() - Gdx.input.getY()) - offset[1]) / 50;
+            int xClick = (Gdx.input.getX() - offset[0]) / Game.WALL_SIZE;
+            int yClick = ((Gdx.graphics.getHeight() - Gdx.input.getY()) - offset[1]) / Game.WALL_SIZE;
 
             map.setPos(xClick, yClick, brush);
         }

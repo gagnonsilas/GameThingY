@@ -3,6 +3,7 @@ package analogsnigs.game.utilities;
 import analogsnigs.game.Game;
 import analogsnigs.game.gameobjects.GameElement;
 import analogsnigs.game.gameobjects.GameObject;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 
 public class Map {
@@ -10,6 +11,89 @@ public class Map {
     int[][] map;
 
     Array<GameObject> objectMap = new Array<>();
+    private static int[][][] tiles;
+
+    public static void loadMapAutoTiler() {
+        tiles = new int[][][] {
+                // Bottom Left Corner
+                {
+                        {0, 3, 0},
+                        {1, 0, 3},
+                        {0, 1, 0},
+                        {0, 2}
+                },
+                // Top Left Corner
+                {
+                        {0, 0, 0},
+                        {1, 0, 3},
+                        {0, 3, 0},
+                        {0, 0}
+                },
+                // Left Wall
+                {
+                        {0, 0, 0},
+                        {1, 0, 0},
+                        {0, 0, 0},
+                        {0, 1}
+                },
+                // Bottom Right Corner
+                {
+                        {0, 3, 0},
+                        {3, 0, 1},
+                        {0, 1, 0},
+                        {2, 2}
+                },
+                // Top Right corner
+                {
+                        {0, 0, 0},
+                        {3, 0, 1},
+                        {0, 3, 0},
+                        {2, 0}
+                },
+                // Right Wall
+                {
+                        {0, 0, 0},
+                        {0, 0, 1},
+                        {0, 0, 0},
+                        {2, 1}
+                },
+                // Right Upwards Corner Wall
+                {
+                        {0, 2, 0},
+                        {0, 0, 3},
+                        {0, 3, 0},
+                        {3, 0}
+                },
+                // Left Upwards Corner Wall
+                {
+                        {0, 2, 0},
+                        {3, 0, 0},
+                        {0, 3, 0},
+                        {4, 0}
+                },
+                // Right Downwards Corner Wall
+                {
+                        {0, 3, 0},
+                        {2, 0, 0},
+                        {0, 0, 0},
+                        {3, 1}
+                },
+                // Left Downwards Corner Wall
+                {
+                        {0, 3, 0},
+                        {0, 0, 2},
+                        {0, 0, 0},
+                        {4, 1}
+                },
+                // Regular Wall
+                {
+                        {0, 0, 0},
+                        {0, 0, 0},
+                        {0, 0, 0},
+                        {1, 0}
+                },
+        };
+    }
 
     public Map(int[][] map) {
         setMap(map, true);
@@ -29,51 +113,42 @@ public class Map {
 
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map[i].length; j++) {
-
-                int textureX;
-
                 if(map[i][j] == 0) {
                     continue;
                 }
                 if(map[i][j] == 1) {
-                    textureX = 0;
+                    objectMap.add(new GameElement(j * Game.WALL_SIZE,
+                            (map.length - i )* Game.WALL_SIZE,
+                            0,
+                            new TextureRegion(Game.MAP_TEXTURES, 16, 16, 16, 16)));
+                    continue;
                 }
-                else if(pos(i, j - 1) == 0) {
-                    textureX = pos(i + 1, j) == 2? 3 : 5;
+                
+                // Loop through each tile type
+                for (int[][] tile : tiles) {
+                    if(tileTypeWorks(tile, i, j)) {
+                        objectMap.add(new GameElement(j * Game.WALL_SIZE,
+                                        (map.length - i )* Game.WALL_SIZE,
+                                        (map[i][j] != 2 || !hasColliders?0:1),
+                                        new TextureRegion(Game.MAP_TEXTURES, tile[3][0]*16, tile[3][1]*16, 16, 16)));
+                        break;
+                    }
                 }
-                else if(pos(i, j + 1) == 0) {
-                    textureX = pos(i + 1, j) == 2? 4 : 6;
-                }
-                else if(pos(i + 1,j) == 1 || pos(i + 1,j) == 0) {
-                    textureX = 1;
-                }
-                else if (pos(i + 1, j) == 2
-                        && pos(i - 1, j) != 0
-                        && pos(i, j + 1) == 2
-                        && pos(i, j - 1) != 0
-                        && pos(i + 1, j + 1) == 0){
-                    textureX = 7;
 
-                }
-                else if (pos(i + 1, j) == 2
-                        && pos(i - 1, j) != 0
-                        && pos(i, j - 1) == 2
-                        && pos(i, j + 1) != 0
-                        && pos(i + 1, j - 1) == 0){
-                    textureX = 8;
-
-                }
-                else {
-                    textureX = 2;
-                }
-                objectMap.add(new GameElement(j * Game.WALL_SIZE,
-                        (map.length - i )* Game.WALL_SIZE,
-                        textureX,
-                        0,
-                        map[i][j] != 2 || !hasColliders?0:1));
 
             }
         }
+    }
+
+    private boolean tileTypeWorks(int[][] testGrid, int i, int j) {
+        for (int k = 0; k < 3; k++) {
+            for (int l = 0; l < 3; l++) {
+                if(testGrid[k][l] != 0 && pos(k + i - 1, l + j - 1)  != testGrid[k][l] - 1) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     public void printMap() {
@@ -136,9 +211,8 @@ public class Map {
         int[][] newMap = new int[bottomBound - topBound + 1][rightBound - leftBound + 1];
 
         for (int i = topBound; i <= bottomBound; i++) {
-            for (int j = leftBound; j <= rightBound; j++) {
-                newMap[i-topBound][j-leftBound] = map[i][j];
-            }
+            if (rightBound + 1 - leftBound >= 0)
+                System.arraycopy(map[i], leftBound, newMap[i - topBound], 0, rightBound + 1 - leftBound);
         }
 
         return newMap;
