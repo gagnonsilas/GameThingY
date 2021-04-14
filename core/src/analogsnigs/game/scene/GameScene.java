@@ -31,6 +31,7 @@ public class GameScene implements Scene{
         Character.moveCharacters();
         GameObject.sort();
         client.sendCharacter();
+        client.updatePanel();
         panel.update();
     }
 

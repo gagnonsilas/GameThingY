@@ -1,6 +1,8 @@
 package analogsnigs.game.client;
 
+import analogsnigs.game.menu.Button;
 import analogsnigs.game.menu.MenuPanel;
+import analogsnigs.game.menu.TextInputField;
 import analogsnigs.game.player.Player;
 import analogsnigs.game.utilities.Map;
 import com.github.czyzby.websocket.WebSocket;
@@ -17,8 +19,10 @@ public class Client {
     MenuPanel panel;
 
     public Client() {
-//        socket = WebSockets.newSocket("wss://analog-snigs-games.herokuapp.com");
-        socket = WebSockets.newSocket("ws://localhost:8753");
+        socket = WebSockets.newSocket("wss://analog-snigs-games.herokuapp.com");
+//        socket = WebSockets.newSocket("ws://localhost:8753");
+
+        panel = new MenuPanel();
         socket.setSendGracefully(true);
         socket.addListener(new WebSocketListener() {
             @Override
@@ -153,26 +157,63 @@ public class Client {
     public void loadMenuPanel(String packet) {
         String[] elements = packet.split("~");
 
-        panel = new MenuPanel();
+        panel = new MenuPanel(true);
 
         for (String element : elements) {
-            String[] properties = element.split(",");
-            panel.addButton(
-                    Float.parseFloat(properties[0]),
-                    Float.parseFloat(properties[1]),
-                    Integer.parseInt(properties[2]),
-                    Integer.parseInt(properties[3]),
-                    properties[4],
-                    this::sendString,
-                    properties[5]
-                            );
+            if(element.contains("&")){
+
+                String[] buttonProperties = element.split("&")[0].split(",");
+                String[] elementProperties = element.split("&")[1].split(",");
+
+                Button button = panel.addButton(
+                        Float.parseFloat(buttonProperties[0]),
+                        Float.parseFloat(buttonProperties[1]),
+                        Integer.parseInt(buttonProperties[2]),
+                        Integer.parseInt(buttonProperties[3]),
+                        buttonProperties[4],
+                        this::sendPanelData,
+                        buttonProperties[5] );
+
+                if(elementProperties[4].equals("input")) {
+                    button.addLinkedElement(new TextInputField(Float.parseFloat(elementProperties[0]),
+                            Float.parseFloat(elementProperties[1]),
+                            Integer.parseInt(elementProperties[2]),
+                            Integer.parseInt(elementProperties[3]),
+                            20
+                    ));
+                }
+
+
+
+            }
+            else {
+                String[] properties = element.split(",");
+                panel.addButton(
+                        Float.parseFloat(properties[0]),
+                        Float.parseFloat(properties[1]),
+                        Integer.parseInt(properties[2]),
+                        Integer.parseInt(properties[3]),
+                        properties[4],
+                        this::sendPanelData,
+                        properties[5]);
+            }
+
+
+
         }
 
 
     }
 
-    public void sendString(String s) {
+    public void updatePanel() {
+        panel.update();
+    }
+
+    public void sendPanelData(String s) {
+        System.out.println("sent String");
         socket.send("#3" + Player.character.name + "," + s);
+        panel.delete();
+        panel = new MenuPanel();
     }
 
     public void interact(String s) {

@@ -2,10 +2,13 @@ package analogsnigs.game.gameobjects;
 
 import analogsnigs.game.Game;
 import analogsnigs.game.utilities.Collider;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class GameElement extends GameObject{
+    private float x;
+    private float y;
 
     public GameElement(int xPos, int yPos, int textureX, int textureY, int drawingLayer) {
         this.xPos = xPos;

@@ -5,6 +5,7 @@ import analogsnigs.game.menu.UIElement;
 import analogsnigs.game.scene.Menu;
 import analogsnigs.game.scene.Scene;
 import analogsnigs.game.utilities.Collider;
+import analogsnigs.game.utilities.GameInput;
 import analogsnigs.game.utilities.Map;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
@@ -23,6 +24,7 @@ public class Game extends ApplicationAdapter {
 	public static Scene currentScene;
 	public static Texture TEXTURE_SHEET;
 	public static Texture MAP_TEXTURES;
+	public static Texture MENU_PANEL;
 	private Viewport viewport;
 	private Camera camera;
 
@@ -30,6 +32,8 @@ public class Game extends ApplicationAdapter {
 	public static BitmapFont FONT;
 
 	public static Color FONT_COLOR = new Color(0.2f, 0.2f, 0.2f, 1);
+
+	public static GameInput INPUT = new GameInput();
 
 
 
@@ -41,9 +45,13 @@ public class Game extends ApplicationAdapter {
 
 		MAP_TEXTURES = new Texture("MapTextures.png");
 
+		MENU_PANEL = new Texture("MenuPanel.png");
+
 		Map.loadMapAutoTiler();
 
 		fontFile = Gdx.files.internal("font/Pixeled-30.fnt");
+
+		Gdx.input.setInputProcessor(INPUT);
 
 		batch = new SpriteBatch();
 

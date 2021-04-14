@@ -1,7 +1,9 @@
 package analogsnigs.game.menu;
 
+import analogsnigs.game.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 
 import java.util.function.Consumer;
@@ -12,14 +14,32 @@ public class MenuPanel {
     Array<UIElement> uiElements = new Array<>();
     Array<Button> buttons = new Array<>();
 
+
+    public MenuPanel(boolean backgroundPanel) {
+        if(backgroundPanel) {
+            uiElements.add(new UIGraphicElement(
+                    0.5f,
+                    0.5f,
+                    8 * Game.WALL_SIZE,
+                    8 * Game.WALL_SIZE,
+                    2, new TextureRegion(Game.MENU_PANEL, 0, 0, 128, 128)));
+        }
+    }
+
     public MenuPanel() {
 
     }
 
     public void update() {
+        for (Button button : buttons) {
+            button.update();
+        }
+        for (UIElement uiElement : uiElements) {
+            uiElement.update();
+        }
         if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)){
             for (Button button : buttons) {
-                button.update();
+                button.isPressed();
             }
         }
     }
@@ -32,5 +52,15 @@ public class MenuPanel {
 
     public void addUIElements(UIElement element) {
         uiElements.add(element);
+    }
+
+    public void delete() {
+        for (UIElement uiElement : uiElements) {
+            uiElement.remove();
+        }
+        for (int i = 0; i < buttons.size; i++) {
+            buttons.get(i).remove();
+        }
+
     }
 }

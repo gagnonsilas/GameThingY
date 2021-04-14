@@ -30,7 +30,6 @@ public class TextInputField extends UIElement {
         textPadding = (height - 30) / 4;
         this.color = Color.WHITE;
         font = Game.FONT;
-        font.getData().setScale(1);
 
         layout = new GlyphLayout(font, data);
 
@@ -60,7 +59,7 @@ public class TextInputField extends UIElement {
                     data += character;
                 }
                 layout.setText(font, data);
-                return false;
+                return true;
             }
 
             @Override
@@ -100,10 +99,16 @@ public class TextInputField extends UIElement {
             if (inX > xPos && xPos + width > inX && inY > yPos && yPos + height > inY) {
                 Gdx.input.setInputProcessor(processor);
             }
+            else {
+                Gdx.input.setInputProcessor(Game.INPUT);
+            }
         }
     }
 
-
-
-
+    @Override
+    public void remove() {
+        Gdx.input.setInputProcessor(Game.INPUT);
+        super.remove();
+        removeFromDrawable();
+    }
 }

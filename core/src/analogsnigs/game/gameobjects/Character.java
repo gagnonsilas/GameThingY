@@ -36,7 +36,7 @@ public class Character extends GameObject{
         setHue(hue);
         characters.add(this);
         addToDrawable();
-        nameTag = new TextElement(xPos + width / 2, yPos + height + 30, 50, 15, name, 0.5f, true, new Color(0.3f, 0.3f, 0.3f, 0.6f));
+        nameTag = new TextElement(xPos + width / 2, yPos + height + 30, 50, 50, name, 0.6f, true, new Color(0.3f, 0.3f, 0.3f, 0.6f));
 
     }
 

@@ -2,6 +2,7 @@ package analogsnigs.game.menu;
 
 import analogsnigs.game.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
@@ -17,7 +18,7 @@ public class Button extends UIElement {
     private final float x;
     private final float y;
 
-    public Button (float x, float y, int width, int height, String data, Consumer<String> method, String buttonText) {
+    public Button(float x, float y, int width, int height, String data, Consumer<String> method, String buttonText) {
         this.x = x;
         this.y = y;
         this.xPos = (int) ((Gdx.graphics.getWidth() * x) - width / 2);
@@ -54,16 +55,32 @@ public class Button extends UIElement {
         }
         this.xPos = (int) ((Gdx.graphics.getWidth() * x) - width / 2);
         this.yPos = (int) ((Gdx.graphics.getHeight() * y) - height / 2);
+
+    }
+
+    public void isPressed() {
         int inX = Gdx.input.getX();
         int inY = Gdx.graphics.getHeight() - Gdx.input.getY();
-        if(inX > xPos && xPos + width > inX && inY > yPos && yPos + height > inY) {
+        if (inX > xPos && xPos + width > inX && inY > yPos && yPos + height > inY) {
             StringBuilder string = new StringBuilder(data);
 
             for (UIElement element : elements) {
                 string.append(element.data).append(",");
             }
 
-            method.accept(string.substring(0, string.length()-1));
+            method.accept(elements.size > 0?string.substring(0, string.length() - 1):data);
+
+            Game.INPUT.changeButtonState(Input.Buttons.LEFT, false);
+
         }
+    }
+
+    @Override
+    public void remove() {
+        super.remove();
+        for (UIElement element : elements) {
+            element.remove();
+        }
+        removeFromDrawable();
     }
 }
