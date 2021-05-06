@@ -40,7 +40,7 @@ public class Button extends UIElement {
 
         drawingLayer = 2;
         addToDrawable();
-        addTextObject();
+        this.reload();
         textureRegion = new TextureRegion(Game.TEXTURE_SHEET, textureXPos * 16, 48, (width / Game.WALL_SIZE) * 16, 16);
     }
 
@@ -64,10 +64,14 @@ public class Button extends UIElement {
             StringBuilder string = new StringBuilder(data);
 
             for (UIElement element : elements) {
-                string.append(element.data).append(",");
+                if(string.length() > 0) {
+                    string.append(",");
+                }
+                string.append(element.data);
             }
-
-            method.accept(elements.size > 0?string.substring(0, string.length() - 1):data);
+            if(string.length() > 0) {
+                method.accept(string.toString());
+            }
 
             Game.INPUT.changeButtonState(Input.Buttons.LEFT, false);
 
@@ -81,5 +85,13 @@ public class Button extends UIElement {
             element.remove();
         }
         removeFromDrawable();
+    }
+
+    public void reload() {
+        for (UIElement element : elements) {
+            element.reload();
+        }
+        textObjects.add(this);
+        addToDrawable();
     }
 }

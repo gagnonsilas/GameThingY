@@ -27,7 +27,7 @@ public class UIElement extends GameObject{
         return data;
     }
 
-    public void addTextObject() {
+    public void reload() {
         textObjects.add(this);
     }
 
@@ -42,6 +42,4 @@ public class UIElement extends GameObject{
     public void remove() {
         textObjects.removeValue(this, true);
     }
-
-
 }

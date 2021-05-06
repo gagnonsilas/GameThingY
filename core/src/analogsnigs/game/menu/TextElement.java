@@ -3,9 +3,7 @@ package analogsnigs.game.menu;
 import analogsnigs.game.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class TextElement extends UIElement{
 
@@ -29,7 +27,7 @@ public class TextElement extends UIElement{
         layout = new GlyphLayout(font, data);
 
         drawingLayer = 2;
-        addTextObject();
+        reload();
 
     }
 
@@ -48,7 +46,7 @@ public class TextElement extends UIElement{
         layout = new GlyphLayout(font, data);
 
         drawingLayer = 2;
-        addTextObject();
+        reload();
 
         this.isOffset = isOffset;
 

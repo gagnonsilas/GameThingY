@@ -1,9 +1,11 @@
 package analogsnigs.game.client;
 
+import analogsnigs.game.Game;
 import analogsnigs.game.menu.Button;
 import analogsnigs.game.menu.MenuPanel;
 import analogsnigs.game.menu.TextInputField;
 import analogsnigs.game.player.Player;
+import analogsnigs.game.scene.Scene;
 import analogsnigs.game.utilities.Map;
 import com.github.czyzby.websocket.WebSocket;
 import com.github.czyzby.websocket.WebSocketListener;
@@ -18,10 +20,12 @@ public class Client {
 
     MenuPanel panel;
 
-    public Client() {
+    Scene game;
+
+    public Client(Scene game) {
         socket = WebSockets.newSocket("wss://analog-snigs-games.herokuapp.com");
 //        socket = WebSockets.newSocket("ws://localhost:8753");
-
+        this.game = game;
         panel = new MenuPanel();
         socket.setSendGracefully(true);
         socket.addListener(new WebSocketListener() {

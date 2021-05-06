@@ -151,14 +151,18 @@ public class Map {
         return true;
     }
 
-    public void printMap() {
+    public String printMap() {
+        StringBuilder trimmedMap = new StringBuilder();
         for (int[] row : trimMap()) {
-            System.out.print("\"");
+            trimmedMap.append("\"");
             for (int column : row) {
-                System.out.print(column + ",");
+                trimmedMap.append(column).append(",");
             }
-            System.out.println("\b~\" +");
+            trimmedMap.append("\b~\" + \n");
+
         }
+        System.out.println(trimmedMap);
+        return trimmedMap.toString();
     }
 
     public int[][] trimMap() {

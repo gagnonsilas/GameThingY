@@ -63,4 +63,14 @@ public class MenuPanel {
         }
 
     }
+
+    public void reload() {
+        for (UIElement uiElement : uiElements) {
+            uiElement.reload();
+        }
+
+        for (Button button : buttons) {
+            button.reload();
+        }
+    }
 }

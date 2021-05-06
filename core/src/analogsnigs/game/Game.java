@@ -35,6 +35,8 @@ public class Game extends ApplicationAdapter {
 
 	public static GameInput INPUT = new GameInput();
 
+	private static Menu MAIN_MENU;
+
 
 
 	
@@ -61,7 +63,9 @@ public class Game extends ApplicationAdapter {
 
 		FONT = new BitmapFont(fontFile);
 
-		currentScene = new Menu();
+		MAIN_MENU = new Menu();
+
+		currentScene = MAIN_MENU;
 
 	}
 
@@ -120,6 +124,11 @@ public class Game extends ApplicationAdapter {
 	public void resize(int width, int height) {
 		viewport.update(width, height, true);
 		camera.update();
+	}
+
+	public static void loadMenu() {
+		currentScene = MAIN_MENU;
+		MAIN_MENU.reload();
 	}
 
 }

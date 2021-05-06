@@ -18,8 +18,9 @@ public class GameScene implements Scene{
     private final MenuPanel panel;
 
     public GameScene(String name) {
+        // Create characters client instance and menus
         player = new Player(new Character(100, 100, 45, 45, name, (int) Math.round(Math.random() * 360)));
-        client = new Client();
+        client = new Client(this);
         panel = new MenuPanel();
         panel.addButton(0.05f, 0.94f, Game.WALL_SIZE, Game.WALL_SIZE, ",", this::disconnect, "X");
         panel.addButton(0.15f, 0.94f, Game.WALL_SIZE, Game.WALL_SIZE, ",", client::interact, "I");
@@ -28,10 +29,15 @@ public class GameScene implements Scene{
     @Override
     public void run() {
         player.update();
+
         Character.moveCharacters();
+
         GameObject.sort();
+
         client.sendCharacter();
+
         client.updatePanel();
+
         panel.update();
     }
 
@@ -52,7 +58,7 @@ public class GameScene implements Scene{
         quit();
         GameObject.resetObjects();
         UIElement.resetTextElements();
-        Game.currentScene = new Menu();
+        Game.loadMenu();
     }
 
 

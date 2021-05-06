@@ -1,12 +1,10 @@
 package analogsnigs.game.menu;
 
 import analogsnigs.game.Game;
-import analogsnigs.game.gameobjects.GameObject;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
@@ -36,7 +34,7 @@ public class TextInputField extends UIElement {
         drawingLayer = 2;
         textureRegion = new TextureRegion(Game.TEXTURE_SHEET, 0, 64, 16, 16);
         addToDrawable();
-        addTextObject();
+        reload();
         processor = new InputProcessor() {
             @Override
             public boolean keyDown(int keycode) {
@@ -110,5 +108,11 @@ public class TextInputField extends UIElement {
         Gdx.input.setInputProcessor(Game.INPUT);
         super.remove();
         removeFromDrawable();
+    }
+
+    @Override
+    public void reload() {
+        textObjects.add(this);
+        addToDrawable();
     }
 }

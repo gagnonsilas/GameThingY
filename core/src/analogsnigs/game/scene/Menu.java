@@ -12,9 +12,11 @@ public class Menu implements Scene {
 
     public Menu() {
        panel = new MenuPanel();
+       UIElement nameInputField = new TextInputField(0.5f, 0.9f, Game.WALL_SIZE * 7, Game.WALL_SIZE, 10);
        panel.addButton(0.5f, 0.7f, Game.WALL_SIZE * 2, Game.WALL_SIZE, "", this::connectToServer, "PLAY")
-            .addLinkedElement(new TextInputField(0.5f, 0.9f, Game.WALL_SIZE * 7, Game.WALL_SIZE, 10));
-       panel.addButton(0.5f, 0.5f, 3 * Game.WALL_SIZE, Game.WALL_SIZE, " ", this::loadMapEditor, "NEW MAP");
+            .addLinkedElement(nameInputField);
+       panel.addButton(0.5f, 0.5f, 3 * Game.WALL_SIZE, Game.WALL_SIZE, "", this::loadMapEditor, "CREATE MAP")
+            .addLinkedElement(nameInputField);
     }
 
     @Override
@@ -38,11 +40,16 @@ public class Menu implements Scene {
         Game.currentScene = new GameScene(userName);
     }
 
-    public void loadMapEditor(String i) {
+    public void loadMapEditor(String name) {
         GameObject.resetDrawableObjects();
         UIElement.resetTextElements();
-        Game.currentScene = new MapEditor();
+        Game.currentScene = new MapEditor(name);
     }
+
+    public void reload() {
+        panel.reload();
+    }
+
 
 
 }

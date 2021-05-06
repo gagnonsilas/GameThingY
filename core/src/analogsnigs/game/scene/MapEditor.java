@@ -24,8 +24,8 @@ public class MapEditor implements Scene {
 
     public int brush = 1;
 
-    public MapEditor() {
-        player = new Player(new Character(mapSize*Game.WALL_SIZE / 2, mapSize*Game.WALL_SIZE / 2, 45, 45, "Bob", (int) Math.round(Math.random() * 360)));
+    public MapEditor(String name) {
+        player = new Player(new Character(mapSize*Game.WALL_SIZE / 2, mapSize*Game.WALL_SIZE / 2, 45, 45, name, (int) Math.round(Math.random() * 360)));
         panel = new MenuPanel();
         panel.addButton(0.05f, 0.94f, Game.WALL_SIZE, Game.WALL_SIZE, ",", this::exit, "X");
         panel.addButton(0.15f, 0.94f, Game.WALL_SIZE, Game.WALL_SIZE, "", this::printMap, "S");
@@ -53,7 +53,7 @@ public class MapEditor implements Scene {
     public void quit() {
         GameObject.resetObjects();
         UIElement.resetTextElements();
-        Game.currentScene = new Menu();
+        Game.loadMenu();
     }
 
     @Override
@@ -69,7 +69,8 @@ public class MapEditor implements Scene {
     }
 
     public void printMap(String m) {
-        map.printMap();
+        Gdx.app.getClipboard().setContents(map.printMap());
+
     }
 
     public void setBrush(String m) {
