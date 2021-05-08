@@ -72,4 +72,9 @@ public class GameObject {
         resetDrawableObjects();
     }
 
+    public void move(int x, int y) {
+        xPos = x;
+        yPos = y;
+    }
+
 }

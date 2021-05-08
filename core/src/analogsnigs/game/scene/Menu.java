@@ -15,7 +15,7 @@ public class Menu implements Scene {
        UIElement nameInputField = new TextInputField(0.5f, 0.9f, Game.WALL_SIZE * 7, Game.WALL_SIZE, 10);
        panel.addButton(0.5f, 0.7f, Game.WALL_SIZE * 2, Game.WALL_SIZE, "", this::connectToServer, "PLAY")
             .addLinkedElement(nameInputField);
-       panel.addButton(0.5f, 0.5f, 3 * Game.WALL_SIZE, Game.WALL_SIZE, "", this::loadMapEditor, "CREATE MAP")
+       panel.addButton(0.5f, 0.5f, 4 * Game.WALL_SIZE, Game.WALL_SIZE, "", this::loadMapEditor, "CREATE MAP")
             .addLinkedElement(nameInputField);
     }
 

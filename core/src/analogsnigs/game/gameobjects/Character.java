@@ -29,18 +29,18 @@ public class Character extends GameObject{
         this.yPos = yPos;
         this.width = width;
         this.height = height;
-        this.collider = new Collider(this, false);
+        this.collider = new Collider(this, false, 0, 0, width, height / 2);
         this.name = name;
         this.drawingLayer = 1;
         this.textureRegion = new TextureRegion(Game.TEXTURE_SHEET, 0, 16, 16, 16);
         setHue(hue);
         characters.add(this);
         addToDrawable();
-        nameTag = new TextElement(xPos + width / 2, yPos + height + 30, 50, 50, name, 0.6f, true, new Color(0.3f, 0.3f, 0.3f, 0.6f));
+        nameTag = new TextElement(xPos + width / 2, yPos + height + 30, 50, 50, name, 0.6f, true, new Color(0.3f, 0.3f, 0.3f, 0.8f));
 
     }
 
-    public void move(int xPos, int yPos) {
+    public void moveToPoint(int xPos, int yPos) {
         this.xPos = setX;
         this.yPos = setY;
         setX = xPos;
@@ -50,7 +50,6 @@ public class Character extends GameObject{
     }
 
     public void update() {
-        nameTag.updatePos(xPos + (width / 2), yPos + height + 15);
         moveX = moveX == 1 && !(Math.abs(setX - xPos) < 1)?1:0;
         moveY = moveY == 1 && !(Math.abs(setY - yPos) < 1)?1:0;
 
@@ -90,4 +89,18 @@ public class Character extends GameObject{
         characters = new ArrayList<>();
     }
 
+    public void hideNameTag() {
+        nameTag.remove();
+    }
+
+    public void showNameTag() {
+        nameTag.reload();
+    }
+
+    @Override
+    public void move(int x, int y) {
+        xPos = x;
+        yPos = y;
+        nameTag.updatePos(xPos + (width / 2), yPos + height + 15);
+    }
 }

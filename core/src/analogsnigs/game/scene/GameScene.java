@@ -7,6 +7,7 @@ import analogsnigs.game.gameobjects.GameObject;
 import analogsnigs.game.menu.MenuPanel;
 import analogsnigs.game.menu.UIElement;
 import analogsnigs.game.player.Player;
+import analogsnigs.game.utilities.Collider;
 import com.badlogic.gdx.Gdx;
 
 public class GameScene implements Scene{
@@ -31,6 +32,8 @@ public class GameScene implements Scene{
         player.update();
 
         Character.moveCharacters();
+
+        Collider.checkColliders();
 
         GameObject.sort();
 

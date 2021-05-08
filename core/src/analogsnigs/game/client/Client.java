@@ -124,7 +124,7 @@ public class Client {
             if(characterData[0].equals(Player.character.name)) {
                 continue;
             }
-            Character.findCharacterByName(characterData[0]).move(Integer.parseInt(characterData[1]),
+            Character.findCharacterByName(characterData[0]).moveToPoint(Integer.parseInt(characterData[1]),
                     Integer.parseInt(characterData[2]));
             Character.findCharacterByName(characterData[0]).setHue(Integer.parseInt(characterData[5]));
         }
@@ -160,6 +160,8 @@ public class Client {
 
     public void loadMenuPanel(String packet) {
         String[] elements = packet.split("~");
+
+        Player.character.hideNameTag();
 
         panel = new MenuPanel(true);
 
@@ -218,6 +220,7 @@ public class Client {
         socket.send("#3" + Player.character.name + "," + s);
         panel.delete();
         panel = new MenuPanel();
+        Player.character.showNameTag();
     }
 
     public void interact(String s) {

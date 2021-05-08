@@ -20,18 +20,24 @@ public class Player {
 
         float deltaTime = Gdx.graphics.getDeltaTime();
 
-        if(Game.INPUT.isKeyPressed(Input.Keys.W)) {
-            character.yPos += speed * deltaTime;
+        double xVel = 0;
+        double yVel = 0;
 
+        if(Game.INPUT.isKeyPressed(Input.Keys.W)) {
+            yVel += speed * deltaTime;
         }
         if(Game.INPUT.isKeyPressed(Input.Keys.S)) {
-            character.yPos -= speed * deltaTime;
+            yVel -= speed * deltaTime;
         }
         if(Game.INPUT.isKeyPressed(Input.Keys.D)) {
-            character.xPos += speed * deltaTime;
+            xVel += speed * deltaTime;
         }
         if(Game.INPUT.isKeyPressed(Input.Keys.A)) {
-            character.xPos -= speed * deltaTime;
+            xVel -= speed * deltaTime;
         }
+
+
+
+        character.move((int)(character.xPos + xVel), (int)(character.yPos + yVel));
     }
 }

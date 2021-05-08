@@ -9,6 +9,7 @@ import analogsnigs.game.utilities.GameInput;
 import analogsnigs.game.utilities.Map;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -42,6 +43,11 @@ public class Game extends ApplicationAdapter {
 	
 	@Override
 	public void create () {
+
+		Gdx.graphics.setWindowedMode(1024, 576);
+
+		Gdx.input.setCatchKey(Input.Keys.SPACE, true);
+
 		// Load all of the assets
 		TEXTURE_SHEET = new Texture("TextureSheet.png");
 
@@ -81,8 +87,6 @@ public class Game extends ApplicationAdapter {
 
 		// Run the update on the scene
 		currentScene.run();
-
-		Collider.checkColliders();
 
 		// Get camera offset for drawing objects at
 		int[] offset = currentScene.getOffset();
