@@ -1,8 +1,10 @@
 package analogsnigs.game.client;
 
 import analogsnigs.game.Game;
+import analogsnigs.game.gameobjects.GameObject;
 import analogsnigs.game.menu.Button;
 import analogsnigs.game.menu.MenuPanel;
+import analogsnigs.game.menu.TextElement;
 import analogsnigs.game.menu.TextInputField;
 import analogsnigs.game.player.Player;
 import analogsnigs.game.scene.Scene;
@@ -38,6 +40,7 @@ public class Client {
             @Override
             public boolean onClose(WebSocket webSocket, WebSocketCloseCode code, String reason) {
                 Character.deleteAll();
+
                 return false;
             }
 
@@ -87,8 +90,12 @@ public class Client {
         else if(packet.contains("#5")) {
             loadMenuPanel(packet.substring(2));
         }
-
-
+        else if(packet.contains("#6")) {
+            teleport(packet.substring(2));
+        }
+        else if(packet.contains("#-1")) {
+            connectionError(packet.substring(3));
+        }
     }
 
     public int[][] stringTo2DArray(String input) {
@@ -216,7 +223,6 @@ public class Client {
     }
 
     public void sendPanelData(String s) {
-        System.out.println("sent String");
         socket.send("#3" + Player.character.name + "," + s);
         panel.delete();
         panel = new MenuPanel();
@@ -225,5 +231,22 @@ public class Client {
 
     public void interact(String s) {
         socket.send("#2" + Player.character.name);
+    }
+
+    public void connectionError(String reason) {
+
+        Player.character.hideNameTag();
+
+        panel = new MenuPanel(true);
+
+        panel.addUIElements(new TextElement(0.5f, 0.7f, Game.WALL_SIZE * 6, Game.WALL_SIZE, reason, 0.6f));
+
+        panel.addButton(0.5f, 0.4f, Game.WALL_SIZE * 2, Game.WALL_SIZE, "CANCEL", Game::loadMenu, "CANCEL");
+    }
+
+    public void teleport(String packet) {
+        String[] data = packet.split(",");
+
+        Player.character.move(Integer.parseInt(data[1]), Integer.parseInt(data[2]));
     }
 }

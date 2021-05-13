@@ -7,6 +7,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.input.RemoteInput;
 
 public class TextInputField extends UIElement {
 
@@ -96,9 +97,13 @@ public class TextInputField extends UIElement {
         if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
             if (inX > xPos && xPos + width > inX && inY > yPos && yPos + height > inY) {
                 Gdx.input.setInputProcessor(processor);
+
+
             }
             else {
                 Gdx.input.setInputProcessor(Game.INPUT);
+//                Gdx.input.setOnscreenKeyboardVisible(false, Input.OnscreenKeyboardType.Default);
+
             }
         }
     }
@@ -106,6 +111,7 @@ public class TextInputField extends UIElement {
     @Override
     public void remove() {
         Gdx.input.setInputProcessor(Game.INPUT);
+//        Gdx.input.setOnscreenKeyboardVisible(false, Input.OnscreenKeyboardType.Default);
         super.remove();
         removeFromDrawable();
     }

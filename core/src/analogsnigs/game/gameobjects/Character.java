@@ -50,6 +50,7 @@ public class Character extends GameObject{
     }
 
     public void update() {
+        nameTag.updatePos(xPos + (width / 2), yPos + height + 15);
         moveX = moveX == 1 && !(Math.abs(setX - xPos) < 1)?1:0;
         moveY = moveY == 1 && !(Math.abs(setY - yPos) < 1)?1:0;
 

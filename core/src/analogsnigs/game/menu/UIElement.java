@@ -41,5 +41,6 @@ public class UIElement extends GameObject{
 
     public void remove() {
         textObjects.removeValue(this, true);
+        removeFromDrawable();
     }
 }

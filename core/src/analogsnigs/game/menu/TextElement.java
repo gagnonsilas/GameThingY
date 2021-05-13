@@ -19,6 +19,20 @@ public class TextElement extends UIElement{
         this.height = height;
         textPadding = (height - 30) / 4;
         this.color = Color.WHITE;
+
+        // Split into rows of appropriate length
+        int lettersPerRow = (width / 64) * 3;
+
+//        System.out.println(lettersPerRow);
+
+        for (int i = 0; i < text.length() / lettersPerRow; i++) {
+            for (int j = 0; j < text.length(); j++) {
+                if (text.substring((lettersPerRow * i) + j, (lettersPerRow * i) + j + 1).equals(" ")) {
+                    text = text.substring(0, (lettersPerRow * i) + j) + "\n" + text.substring((lettersPerRow * i) + j);
+                    break;
+                }
+            }
+        }
         this.data = text;
 
         font = Game.FONT;

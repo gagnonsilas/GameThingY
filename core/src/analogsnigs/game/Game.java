@@ -38,9 +38,6 @@ public class Game extends ApplicationAdapter {
 
 	private static Menu MAIN_MENU;
 
-
-
-	
 	@Override
 	public void create () {
 
@@ -131,6 +128,13 @@ public class Game extends ApplicationAdapter {
 	}
 
 	public static void loadMenu() {
+		currentScene = MAIN_MENU;
+		MAIN_MENU.reload();
+	}
+
+	public static void loadMenu(String s) {
+		GameObject.resetObjects();
+		UIElement.resetTextElements();
 		currentScene = MAIN_MENU;
 		MAIN_MENU.reload();
 	}

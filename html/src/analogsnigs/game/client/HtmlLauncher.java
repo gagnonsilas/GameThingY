@@ -38,4 +38,9 @@ public class HtmlLauncher extends GwtApplication {
                 meterStyle.setProperty("backgroundColor", "#bfbfbf");
                 meterStyle.setProperty("backgroundImage", "none");
         }
+
+        public static native String prompt(String text, String defValue) /*-{
+                return $wnd.prompt(text, defValue);
+        }-*/;
+
 }
