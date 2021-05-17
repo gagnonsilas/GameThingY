@@ -105,7 +105,9 @@ public class Map {
     }
 
     public void loadMap(boolean hasColliders) {
+        System.out.println("test");
         for (GameObject object : objectMap) {
+            System.out.println("deleted");
             object.delete();
         }
 

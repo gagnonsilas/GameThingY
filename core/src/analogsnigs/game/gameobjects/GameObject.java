@@ -59,8 +59,8 @@ public class GameObject {
     }
 
     public void delete() {
-        Collider.delete(collider);
         removeFromDrawable();
+        Collider.delete(collider);
     }
 
     public static void sort() {

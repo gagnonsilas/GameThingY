@@ -18,36 +18,42 @@ public class Joystick extends UIElement {
         this.y = yPos;
         this.xPos = xPos;
         this.yPos = yPos;
-        this.width = (Game.WALL_SIZE / 16) * 6;
-        this.height = (Game.WALL_SIZE / 16) * 6;
-        this.drawingLayer = 1;
+        this.width = (Game.WALL_SIZE / 16) * 10;
+        this.height = (Game.WALL_SIZE / 16) * 10;
+        this.drawingLayer = 2;
         this.color = Color.WHITE;
-        this.textureRegion = new TextureRegion(Game.TEXTURE_SHEET, 4 * 16, 16, 10, 10);
-        isOffset = false;
+        this.textureRegion = new TextureRegion(Game.TEXTURE_SHEET, 16, 4 * 16, 10, 10);
+        isOffset = true;
         addToDrawable();
     }
 
     public float[] checkJoystick() {
 
-        int inX = Gdx.input.getX();
-        int inY = Gdx.input.getY() - Gdx.graphics.getHeight();
-        if(inX < Gdx.graphics.getWidth() / 2 && inY < Gdx.graphics.getWidth() / 2) {
+        int inX = Gdx.input.getX() - (width / 2);
+        int inY = Gdx.graphics.getHeight() - Gdx.input.getY() - (height / 2);
+
+
+        if(inX < Gdx.graphics.getWidth() / 3 && inY < Gdx.graphics.getHeight() / 3) {
+            float xOffset = 0;
+            float yOffset = 0;
             if (Gdx.input.justTouched()) {
                 x = inX;
                 y = inY;
             } else if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
-                int length = (int) Math.sqrt(((inX - x) * (inX - x)) +
+                float length = (float) Math.sqrt(((inX - x) * (inX - x)) +
                         ((inY - y) * (inY - y)));
                 if (length < Game.WALL_SIZE) {
                     xPos = inX;
                     yPos = inY;
+                    xOffset = (inX - x) / (Game.WALL_SIZE * 1f);
+                    yOffset = (inY - y) / (Game.WALL_SIZE * 1f);
                 } else {
-                    xPos = ((inX - x) / length) * Game.WALL_SIZE;
-                    yPos = ((inY - y) / length) * Game.WALL_SIZE;
+                    xOffset = (inX - x) / (length);
+                    yOffset = (inY - y) / (length);
+                    xPos = (int) (x + (xOffset * Game.WALL_SIZE));
+                    yPos = (int) (y + (yOffset * Game.WALL_SIZE));
                 }
-                System.out.println(xPos - x + " " + x + " " + length);
-                System.out.println((inX - x) + ", " + (inY - y));
-                return new float[]{(xPos - x) / (Game.WALL_SIZE * 1f), (y - yPos) / (Game.WALL_SIZE * 1f)};
+                return new float[]{xOffset, yOffset};
             } else {
                 xPos = x;
                 yPos = y;

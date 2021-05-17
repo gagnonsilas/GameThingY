@@ -25,9 +25,10 @@ public class Client {
     Scene game;
 
     public Client(Scene game) {
-        socket = WebSockets.newSocket("wss://analog-snigs-games.herokuapp.com");
-//        socket = WebSockets.newSocket("ws://localhost:8753");
+//        socket = WebSockets.newSocket("wss://analog-snigs-games.herokuapp.com");
+        socket = WebSockets.newSocket("ws://localhost:8753");
         this.game = game;
+        this.map = new Map(new int[0][]);
         panel = new MenuPanel();
         socket.setSendGracefully(true);
         socket.addListener(new WebSocketListener() {
@@ -162,7 +163,7 @@ public class Client {
     }
 
     public void loadMap(int[][] map) {
-        this.map = new Map(map);
+        this.map.setMap(map, true);
     }
 
     public void loadMenuPanel(String packet) {
