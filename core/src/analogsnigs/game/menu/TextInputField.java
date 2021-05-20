@@ -21,8 +21,10 @@ public class TextInputField extends UIElement {
     public TextInputField(float x, float y, int width, int height, int inputLength) {
         this.x = x;
         this.y = y;
-        this.xPos = (int) ((Gdx.graphics.getWidth() * x) - width / 2);
-        this.yPos = (int) ((Gdx.graphics.getHeight() * y) - height / 2);
+        this.xPos = hasBackgroundPanel?(int) (((Game.WALL_SIZE * 8 * x) + (Gdx.graphics.getWidth() / 2) - (Game.WALL_SIZE * 8 / 2)) - width / 2):
+                (int) ((Gdx.graphics.getWidth() * x) - width / 2);
+        this.yPos = hasBackgroundPanel?(int) (((Game.WALL_SIZE * 8 * y) + (Gdx.graphics.getHeight() / 2) - (Game.WALL_SIZE * 8 / 2)) - height / 2)
+                :(int) ((Gdx.graphics.getHeight() * y) - height / 2);
         this.width = width;
         this.height = height;
         this.inputLength = inputLength;
@@ -92,8 +94,10 @@ public class TextInputField extends UIElement {
     public void update() {
         int inX = Gdx.input.getX();
         int inY = Gdx.graphics.getHeight() - Gdx.input.getY();
-        this.xPos = (int) ((Gdx.graphics.getWidth() * x) - width / 2);
-        this.yPos = (int) ((Gdx.graphics.getHeight() * y) - height / 2);
+        this.xPos = hasBackgroundPanel?(int) (((Game.WALL_SIZE * 8 * x) + (Gdx.graphics.getWidth() / 2) - (Game.WALL_SIZE * 8 / 2)) - width / 2):
+                (int) ((Gdx.graphics.getWidth() * x) - width / 2);
+        this.yPos = hasBackgroundPanel?(int) (((Game.WALL_SIZE * 8 * y) + (Gdx.graphics.getHeight() / 2) - (Game.WALL_SIZE * 8 / 2)) - height / 2)
+                :(int) ((Gdx.graphics.getHeight() * y) - height / 2);
         if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
             if (inX > xPos && xPos + width > inX && inY > yPos && yPos + height > inY) {
                 Gdx.input.setInputProcessor(processor);

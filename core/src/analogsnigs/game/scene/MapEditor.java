@@ -10,7 +10,6 @@ import analogsnigs.game.player.Player;
 import analogsnigs.game.utilities.Map;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.sun.org.apache.xpath.internal.axes.WalkerFactory;
 
 public class MapEditor implements Scene {
 
@@ -69,7 +68,7 @@ public class MapEditor implements Scene {
     }
 
     public void printMap(String m) {
-        Gdx.app.getClipboard().setContents(map.printMap());
+        Gdx.app.getClipboard().setContents(map.getMapAsString());
     }
 
     public void setBrush(String m) {

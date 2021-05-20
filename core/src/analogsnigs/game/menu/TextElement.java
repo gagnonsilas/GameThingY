@@ -13,8 +13,10 @@ public class TextElement extends UIElement{
     public TextElement (float x, float y, int width, int height, String text, float scale) {
         this.x = x;
         this.y = y;
-        this.xPos = (int) ((Gdx.graphics.getWidth() * x) - width / 2);
-        this.yPos = (int) ((Gdx.graphics.getHeight() * y) - height / 2);
+        this.xPos = hasBackgroundPanel?(int) (((Game.WALL_SIZE * 8 * x) + (Gdx.graphics.getWidth() / 2) - (Game.WALL_SIZE * 8 / 2)) - width / 2):
+                (int) ((Gdx.graphics.getWidth() * x) - width / 2);
+        this.yPos = hasBackgroundPanel?(int) (((Game.WALL_SIZE * 8 * y) + (Gdx.graphics.getHeight() / 2) - (Game.WALL_SIZE * 8 / 2)) - height / 2)
+                :(int) ((Gdx.graphics.getHeight() * y) - height / 2);
         this.width = width;
         this.height = height;
         textPadding = (height - 30) / 4;

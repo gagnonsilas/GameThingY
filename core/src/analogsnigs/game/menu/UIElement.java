@@ -19,6 +19,8 @@ public class UIElement extends GameObject{
 
     public static Array<UIElement> textObjects = new Array<>();
 
+    public boolean hasBackgroundPanel;
+
     public UIElement() {
 
     }

@@ -13,16 +13,17 @@ public class MenuPanel {
 
     Array<UIElement> uiElements = new Array<>();
     Array<Button> buttons = new Array<>();
+    boolean hasBackgroundPanel;
 
-
-    public MenuPanel(boolean backgroundPanel) {
-        if(backgroundPanel) {
+    public MenuPanel(boolean hasBackgroundPanel) {
+        this.hasBackgroundPanel = hasBackgroundPanel;
+        if(hasBackgroundPanel) {
             uiElements.add(new UIGraphicElement(
                     0.5f,
                     0.5f,
                     8 * Game.WALL_SIZE,
                     8 * Game.WALL_SIZE,
-                    2, new TextureRegion(Game.MENU_PANEL, 0, 0, 128, 128)));
+                    2, new TextureRegion(Game.MENU_PANEL, 0, 0, 16*8, 16*8)));
         }
     }
 
@@ -45,7 +46,7 @@ public class MenuPanel {
     }
 
     public Button addButton(float x, float y, int width, int height, String text, Consumer<String> method, String buttonText) {
-        Button button = new Button(x, y, width, height, text, method, buttonText);
+        Button button = new Button(x, y, width, height, text, method, buttonText, hasBackgroundPanel);
         buttons.add(button);
         return button;
     }

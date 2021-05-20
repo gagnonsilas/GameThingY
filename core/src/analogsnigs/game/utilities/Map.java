@@ -105,9 +105,7 @@ public class Map {
     }
 
     public void loadMap(boolean hasColliders) {
-        System.out.println("test");
         for (GameObject object : objectMap) {
-            System.out.println("deleted");
             object.delete();
         }
 
@@ -153,17 +151,20 @@ public class Map {
         return true;
     }
 
-    public String printMap() {
+    public String getMapAsString() {
         StringBuilder trimmedMap = new StringBuilder();
         for (int[] row : trimMap()) {
             trimmedMap.append("\"");
             for (int column : row) {
                 trimmedMap.append(column).append(",");
             }
-            trimmedMap.append("\b~\" + \n");
+
+            trimmedMap.deleteCharAt(trimmedMap.length() - 1);
+
+            trimmedMap.append("\" + \n");
 
         }
-        System.out.println(trimmedMap);
+
         return trimmedMap.toString();
     }
 
