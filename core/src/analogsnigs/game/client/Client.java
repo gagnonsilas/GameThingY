@@ -66,7 +66,7 @@ public class Client {
     }
 
     public void sendCharacter() {
-        String output = "#1" + Player.character.name + "," +
+        String output = "#0" + Player.character.name + "," +
                 Player.character.xPos + "," +
                 Player.character.yPos + "," +
                 Player.character.width + "," +
@@ -76,10 +76,10 @@ public class Client {
     }
 
     public void parsePacket(String packet) {
-        if(packet.contains("#1")) {
+        if(packet.contains("#0")) {
             characterUpdate(packet.substring(2));
         }
-        else if(packet.contains("#2")) {
+        else if(packet.contains("#1")) {
             addCharacter(packet.substring(2));
         }
         else if(packet.contains("#3")) {
