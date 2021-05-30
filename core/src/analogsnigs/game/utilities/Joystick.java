@@ -33,9 +33,9 @@ public class Joystick extends UIElement {
         int inY = Gdx.graphics.getHeight() - Gdx.input.getY() - (height / 2);
 
 
-        if(inX < Gdx.graphics.getWidth() / 3 && inY < Gdx.graphics.getHeight() / 3) {
-            float xOffset = 0;
-            float yOffset = 0;
+        if(inX < Gdx.graphics.getWidth() / 2 && inY < Gdx.graphics.getHeight() / 2) {
+            float xOffset;
+            float yOffset;
             if (Gdx.input.justTouched()) {
                 x = inX;
                 y = inY;

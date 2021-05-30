@@ -1,7 +1,7 @@
 package analogsnigs.game.client;
 
 import analogsnigs.game.Game;
-import analogsnigs.game.gameobjects.GameObject;
+import analogsnigs.game.gameobjects.GameElement;
 import analogsnigs.game.menu.Button;
 import analogsnigs.game.menu.MenuPanel;
 import analogsnigs.game.menu.TextElement;
@@ -17,11 +17,8 @@ import analogsnigs.game.gameobjects.Character;
 
 public class Client {
     WebSocket socket;
-
     Map map;
-
     MenuPanel panel;
-
     Scene game;
 
     public Client(Scene game) {
@@ -66,7 +63,7 @@ public class Client {
     }
 
     public void sendCharacter() {
-        String output = "#0" + Player.character.name + "," +
+        String output = "#1" + Player.character.name + "," +
                 Player.character.xPos + "," +
                 Player.character.yPos + "," +
                 Player.character.width + "," +
@@ -76,11 +73,14 @@ public class Client {
     }
 
     public void parsePacket(String packet) {
-        if(packet.contains("#0")) {
+        if(packet.contains("#1")) {
             characterUpdate(packet.substring(2));
         }
-        else if(packet.contains("#1")) {
+        else if(packet.contains("#0")) {
             addCharacter(packet.substring(2));
+        }
+        else if(packet.contains("#2")) {
+            loadObject(packet.substring(2));
         }
         else if(packet.contains("#3")) {
             System.out.println(packet.substring(2));
@@ -171,6 +171,8 @@ public class Client {
 
         Player.character.hideNameTag();
 
+        panel.delete();
+
         panel = new MenuPanel(true);
 
         for (String element : elements) {
@@ -219,6 +221,18 @@ public class Client {
 
     }
 
+    public void loadObject(String packet) {
+        String[] object = packet.split(",");
+
+        new GameElement(Integer.parseInt(object[0]),
+                Integer.parseInt(object[1]),
+                Integer.parseInt(object[2]),
+                Integer.parseInt(object[3]),
+                1
+        ).addToDrawable();
+
+    }
+
     public void updatePanel() {
         panel.update();
     }
@@ -231,7 +245,7 @@ public class Client {
     }
 
     public void interact(String s) {
-        socket.send("#2" + Player.character.name);
+        socket.send("#7" + Player.character.name);
     }
 
     public void connectionError(String reason) {

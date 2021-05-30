@@ -10,17 +10,14 @@ public class GameElement extends GameObject{
     private float x;
     private float y;
 
-    public GameElement(int xPos, int yPos, int textureX, int textureY, int drawingLayer) {
+    public GameElement(int xPos, int yPos, int size, int textureID, int drawingLayer) {
         this.xPos = xPos;
         this.yPos = yPos;
         this.width = Game.WALL_SIZE;
         this.height = Game.WALL_SIZE;
         this.drawingLayer = drawingLayer;
         this.color = Color.WHITE;
-        if(drawingLayer == 1) {
-            collider = new Collider(this, true);
-        }
-        textureRegion = new TextureRegion(Game.TEXTURE_SHEET, textureX * 16, textureY * 16, 16, 16);
+        textureRegion = new TextureRegion(Game.TEXTURE_SHEET, textureID * 16, 32, 16, 16);
         addToDrawable();
     }
     public GameElement(int xPos, int yPos, int drawingLayer, TextureRegion textureRegion) {

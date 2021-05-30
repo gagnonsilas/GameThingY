@@ -17,7 +17,9 @@ public class Player {
 
     public Player(Character character) {
         Player.character = character;
-//        joystick = new Joystick(Game.WALL_SIZE * 2, Game.WALL_SIZE * 2);
+        if(Game.isMobile) {
+            joystick = new Joystick(Game.WALL_SIZE * 2, Game.WALL_SIZE * 2);
+        }
     }
 
     public void update() {
@@ -28,29 +30,27 @@ public class Player {
         double xVel = 0;
         double yVel = 0;
 
-//        float[] joystickOut = joystick.checkJoystick();
+        if(Game.isMobile) {
+            float[] joystickOut = joystick.checkJoystick();
 
-//        xVel = joystickOut[0] * speed * deltaTime;
-//        yVel = joystickOut[1] * speed * deltaTime;
-
-//        System.out.println(joystickOut[0]);
-//        System.out.println(joystickOut[1]);
-
-
-        if(Game.INPUT.isKeyPressed(Input.Keys.W)) {
-            yVel += speed * deltaTime;
+            xVel = joystickOut[0] * speed * deltaTime;
+            yVel = joystickOut[1] * speed * deltaTime;
         }
-        if(Game.INPUT.isKeyPressed(Input.Keys.S)) {
-            yVel -= speed * deltaTime;
-        }
-        if(Game.INPUT.isKeyPressed(Input.Keys.D)) {
-            xVel += speed * deltaTime;
-        }
-        if(Game.INPUT.isKeyPressed(Input.Keys.A)) {
-            xVel -= speed * deltaTime;
-        }
+        else{
+            if (Game.INPUT.isKeyPressed(Input.Keys.W)) {
+                yVel += speed * deltaTime;
+            }
+            if (Game.INPUT.isKeyPressed(Input.Keys.S)) {
+                yVel -= speed * deltaTime;
+            }
+            if (Game.INPUT.isKeyPressed(Input.Keys.D)) {
+                xVel += speed * deltaTime;
+            }
+            if (Game.INPUT.isKeyPressed(Input.Keys.A)) {
+                xVel -= speed * deltaTime;
+            }
 
-
+        }
 
         character.move((int)(character.xPos + xVel), (int)(character.yPos + yVel));
     }

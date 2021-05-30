@@ -14,17 +14,11 @@ public class Button extends UIElement {
     Consumer<String> method;
     private final Array<UIElement> elements = new Array<>();
 
-    private final float x;
-    private final float y;
-
     public Button(float x, float y, int width, int height, String data, Consumer<String> method, String buttonText, boolean hasBackgroundPanel) {
         this.hasBackgroundPanel = hasBackgroundPanel;
         this.x = x;
         this.y = y;
-        this.xPos = hasBackgroundPanel?(int) (((Game.WALL_SIZE * 8 * x) + (Gdx.graphics.getWidth() / 2) - (Game.WALL_SIZE * 8 / 2)) - width / 2):
-                (int) ((Gdx.graphics.getWidth() * x) - width / 2);
-        this.yPos = hasBackgroundPanel?(int) (((Game.WALL_SIZE * 8 * y) + (Gdx.graphics.getHeight() / 2) - (Game.WALL_SIZE * 8 / 2)) - height / 2)
-                :(int) ((Gdx.graphics.getHeight() * y) - height / 2);
+        super.update();
         this.data = data;
         this.width = width;
         this.height = height;
@@ -55,11 +49,7 @@ public class Button extends UIElement {
         for (UIElement element : elements) {
             element.update();
         }
-        this.xPos = hasBackgroundPanel?(int) (((Game.WALL_SIZE * 8 * x) + (Gdx.graphics.getWidth() / 2) - (Game.WALL_SIZE * 8 / 2)) - width / 2):
-                (int) ((Gdx.graphics.getWidth() * x) - width / 2);
-        this.yPos = hasBackgroundPanel?(int) (((Game.WALL_SIZE * 8 * y) + (Gdx.graphics.getHeight() / 2) - (Game.WALL_SIZE * 8 / 2)) - height / 2)
-                :(int) ((Gdx.graphics.getHeight() * y) - height / 2);
-
+        super.update();
     }
 
     public void isPressed() {

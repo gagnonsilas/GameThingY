@@ -4,7 +4,6 @@ import analogsnigs.game.gameobjects.GameObject;
 import analogsnigs.game.menu.UIElement;
 import analogsnigs.game.scene.Menu;
 import analogsnigs.game.scene.Scene;
-import analogsnigs.game.utilities.Collider;
 import analogsnigs.game.utilities.GameInput;
 import analogsnigs.game.utilities.Map;
 import com.badlogic.gdx.ApplicationAdapter;
@@ -22,6 +21,7 @@ public class Game extends ApplicationAdapter {
 	SpriteBatch batch;
 
 	public static final int WALL_SIZE = 64;
+	public static boolean isMobile = false;
 	public static Scene currentScene;
 	public static Texture TEXTURE_SHEET;
 	public static Texture MAP_TEXTURES;

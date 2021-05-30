@@ -7,7 +7,6 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.input.RemoteInput;
 
 public class TextInputField extends UIElement {
 
@@ -15,16 +14,10 @@ public class TextInputField extends UIElement {
 
     InputProcessor processor;
 
-    private final float x;
-    private final float y;
-
     public TextInputField(float x, float y, int width, int height, int inputLength) {
         this.x = x;
         this.y = y;
-        this.xPos = hasBackgroundPanel?(int) (((Game.WALL_SIZE * 8 * x) + (Gdx.graphics.getWidth() / 2) - (Game.WALL_SIZE * 8 / 2)) - width / 2):
-                (int) ((Gdx.graphics.getWidth() * x) - width / 2);
-        this.yPos = hasBackgroundPanel?(int) (((Game.WALL_SIZE * 8 * y) + (Gdx.graphics.getHeight() / 2) - (Game.WALL_SIZE * 8 / 2)) - height / 2)
-                :(int) ((Gdx.graphics.getHeight() * y) - height / 2);
+        super.update();
         this.width = width;
         this.height = height;
         this.inputLength = inputLength;
@@ -56,9 +49,13 @@ public class TextInputField extends UIElement {
                         data = data.substring(0, data.length() - 1);
                     }
                 }
+                else if(character == '\n') {
+                    Gdx.input.setInputProcessor(Game.INPUT);
+                }
                 else if(data.length() < inputLength) {
                     data += character;
                 }
+
                 layout.setText(font, data);
                 return true;
             }
@@ -92,12 +89,11 @@ public class TextInputField extends UIElement {
 
     @Override
     public void update() {
+        super.update();
+
         int inX = Gdx.input.getX();
         int inY = Gdx.graphics.getHeight() - Gdx.input.getY();
-        this.xPos = hasBackgroundPanel?(int) (((Game.WALL_SIZE * 8 * x) + (Gdx.graphics.getWidth() / 2) - (Game.WALL_SIZE * 8 / 2)) - width / 2):
-                (int) ((Gdx.graphics.getWidth() * x) - width / 2);
-        this.yPos = hasBackgroundPanel?(int) (((Game.WALL_SIZE * 8 * y) + (Gdx.graphics.getHeight() / 2) - (Game.WALL_SIZE * 8 / 2)) - height / 2)
-                :(int) ((Gdx.graphics.getHeight() * y) - height / 2);
+
         if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
             if (inX > xPos && xPos + width > inX && inY > yPos && yPos + height > inY) {
                 Gdx.input.setInputProcessor(processor);
@@ -106,7 +102,6 @@ public class TextInputField extends UIElement {
             }
             else {
                 Gdx.input.setInputProcessor(Game.INPUT);
-//                Gdx.input.setOnscreenKeyboardVisible(false, Input.OnscreenKeyboardType.Default);
 
             }
         }
