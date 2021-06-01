@@ -1,6 +1,7 @@
 package analogsnigs.game.scene;
 
 import analogsnigs.game.Game;
+import analogsnigs.game.editor.GameEditor;
 import analogsnigs.game.gameobjects.GameObject;
 import analogsnigs.game.menu.MenuPanel;
 import analogsnigs.game.menu.TextInputField;
@@ -43,7 +44,7 @@ public class Menu implements Scene {
     public void loadMapEditor(String name) {
         GameObject.resetDrawableObjects();
         UIElement.resetTextElements();
-        Game.currentScene = new MapEditor(name);
+        Game.currentScene = new GameEditor(name);
     }
 
     public void reload() {

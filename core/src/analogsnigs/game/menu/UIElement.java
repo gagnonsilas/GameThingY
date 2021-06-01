@@ -25,9 +25,7 @@ public class UIElement extends GameObject{
 
     public boolean hasBackgroundPanel;
 
-    public UIElement() {
-
-    }
+    public UIElement() {}
 
     public void reload() {
         textObjects.add(this);

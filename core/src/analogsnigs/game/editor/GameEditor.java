@@ -1,4 +1,4 @@
-package analogsnigs.game.scene;
+package analogsnigs.game.editor;
 
 import analogsnigs.game.Game;
 import analogsnigs.game.gameobjects.Barrier;
@@ -7,30 +7,54 @@ import analogsnigs.game.gameobjects.GameObject;
 import analogsnigs.game.menu.MenuPanel;
 import analogsnigs.game.menu.UIElement;
 import analogsnigs.game.player.Player;
+import analogsnigs.game.scene.Scene;
 import analogsnigs.game.utilities.Map;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 
-public class MapEditor implements Scene {
+public class GameEditor implements Scene {
 
     int mapSize = Game.WALL_SIZE;
 
     Map map = new Map(new int[mapSize][mapSize]);
 
     MenuPanel panel;
+    MenuPanel mapEditor;
+    MenuPanel eventEditor;
+    MenuPanel objectEditor;
+
+    MenuPanel editorPanel;
 
     Player player;
 
     public int brush = 1;
 
-    public MapEditor(String name) {
+    public GameEditor(String name) {
         player = new Player(new Character(mapSize*Game.WALL_SIZE / 2, mapSize*Game.WALL_SIZE / 2, 45, 45, name, (int) Math.round(Math.random() * 360)));
+
         panel = new MenuPanel();
+        mapEditor = new MenuPanel();
+        eventEditor = new MenuPanel();
+        objectEditor = new MenuPanel();
+
         panel.addButton(0.05f, 0.94f, Game.WALL_SIZE, Game.WALL_SIZE, ",", this::exit, "X");
-        panel.addButton(0.15f, 0.94f, Game.WALL_SIZE, Game.WALL_SIZE, " ", this::printMap, "S");
-        panel.addButton(0.25f, 0.94f, Game.WALL_SIZE, Game.WALL_SIZE, "0", this::setBrush, "E");
-        panel.addButton(0.35f, 0.94f, Game.WALL_SIZE, Game.WALL_SIZE, "1", this::setBrush, "F");
-        panel.addButton(0.45f, 0.94f, Game.WALL_SIZE, Game.WALL_SIZE, "2", this::setBrush, "W");
+        panel.addButton(0.15f, 0.94f, Game.WALL_SIZE, Game.WALL_SIZE, " ", this::saveMap, "S");
+        panel.addButton(0.88f, 0.90f, Game.WALL_SIZE * 3, Game.WALL_SIZE, ",", this::setMapEditor, "Map");
+        panel.addButton(0.88f, 0.76f, Game.WALL_SIZE * 3, Game.WALL_SIZE, " ", this::setEventEditor, "Events");
+        panel.addButton(0.88f, 0.62f, Game.WALL_SIZE * 3, Game.WALL_SIZE, " ", this::setObjectEditor, "Objects");
+
+        mapEditor.addButton(0.05f, 0.09f, Game.WALL_SIZE, Game.WALL_SIZE, "0", this::setBrush, "E");
+        mapEditor.addButton(0.15f, 0.09f, Game.WALL_SIZE, Game.WALL_SIZE, "1", this::setBrush, "F");
+        mapEditor.addButton(0.25f, 0.09f, Game.WALL_SIZE, Game.WALL_SIZE, "2", this::setBrush, "W");
+
+        eventEditor.addButton(0.05f, 0.09f, Game.WALL_SIZE, Game.WALL_SIZE, "0", this::setBrush, "+");
+        eventEditor.addButton(0.15f, 0.09f, Game.WALL_SIZE, Game.WALL_SIZE, "1", this::setBrush, "");
+        eventEditor.addButton(0.25f, 0.09f, Game.WALL_SIZE, Game.WALL_SIZE, "2", this::setBrush, "");
+
+        editorPanel = mapEditor;
+
+        eventEditor.delete();
+        objectEditor.delete();
 
         new Barrier(-Game.WALL_SIZE, -Game.WALL_SIZE, Game.WALL_SIZE, mapSize * Game.WALL_SIZE + 100);
         new Barrier(-Game.WALL_SIZE, 0, mapSize * Game.WALL_SIZE + 100, Game.WALL_SIZE);
@@ -45,7 +69,10 @@ public class MapEditor implements Scene {
         Character.moveCharacters();
         GameObject.sort();
         panel.update();
-        draw();
+        editorPanel.update();
+        if(editorPanel == mapEditor) {
+            draw();
+        }
     }
 
     @Override
@@ -67,7 +94,7 @@ public class MapEditor implements Scene {
         quit();
     }
 
-    public void printMap(String m) {
+    public void saveMap(String m) {
         Gdx.app.getClipboard().setContents(map.getMapAsString());
     }
 
@@ -83,5 +110,23 @@ public class MapEditor implements Scene {
 
             map.setPos(xClick, yClick, brush);
         }
+    }
+
+    public void setMapEditor(String s) {
+        editorPanel.delete();
+        editorPanel = mapEditor;
+        editorPanel.reload();
+    }
+
+    public void setEventEditor(String s) {
+        editorPanel.delete();
+        editorPanel = eventEditor;
+        editorPanel.reload();
+    }
+
+    public void setObjectEditor(String s) {
+        editorPanel.delete();
+        editorPanel = objectEditor;
+        editorPanel.reload();
     }
 }
