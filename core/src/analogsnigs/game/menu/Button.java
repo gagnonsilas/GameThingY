@@ -14,10 +14,12 @@ public class Button extends UIElement {
     Consumer<String> method;
     private final Array<UIElement> elements = new Array<>();
 
-    public Button(float x, float y, int width, int height, String data, Consumer<String> method, String buttonText, boolean hasBackgroundPanel) {
+    public Button(float x, float y, int xOffset, int yOffset, int width, int height, String data, Consumer<String> method, String buttonText, boolean hasBackgroundPanel) {
         this.hasBackgroundPanel = hasBackgroundPanel;
         this.x = x;
         this.y = y;
+        this.xOffset = xOffset;
+        this.yOffset = yOffset;
         super.update();
         this.data = data;
         this.width = width;

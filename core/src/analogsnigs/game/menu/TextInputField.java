@@ -14,9 +14,11 @@ public class TextInputField extends UIElement {
 
     InputProcessor processor;
 
-    public TextInputField(float x, float y, int width, int height, int inputLength) {
+    public TextInputField(float x, float y, int xOffset, int yOffset, int width, int height, int inputLength) {
         this.x = x;
         this.y = y;
+        this.xOffset = xOffset;
+        this.yOffset = yOffset;
         super.update();
         this.width = width;
         this.height = height;

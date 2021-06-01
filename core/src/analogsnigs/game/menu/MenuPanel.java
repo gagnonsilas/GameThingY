@@ -45,8 +45,8 @@ public class MenuPanel {
         }
     }
 
-    public Button addButton(float x, float y, int width, int height, String text, Consumer<String> method, String buttonText) {
-        Button button = new Button(x, y, width, height, text, method, buttonText, hasBackgroundPanel);
+    public Button addButton(float x, float y, int xOffset, int yOffset, int width, int height, String text, Consumer<String> method, String buttonText) {
+        Button button = new Button(x, y, xOffset, yOffset, width, height, text, method, buttonText, hasBackgroundPanel);
         buttons.add(button);
         return button;
     }

@@ -184,6 +184,8 @@ public class Client {
                 Button button = panel.addButton(
                         Float.parseFloat(buttonProperties[0]),
                         Float.parseFloat(buttonProperties[1]),
+                        0,
+                        0,
                         Integer.parseInt(buttonProperties[2]),
                         Integer.parseInt(buttonProperties[3]),
                         buttonProperties[4],
@@ -193,6 +195,8 @@ public class Client {
                 if(elementProperties[4].equals("input")) {
                     button.addLinkedElement(new TextInputField(Float.parseFloat(elementProperties[0]),
                             Float.parseFloat(elementProperties[1]),
+                            0,
+                            0,
                             Integer.parseInt(elementProperties[2]),
                             Integer.parseInt(elementProperties[3]),
                             20
@@ -207,6 +211,8 @@ public class Client {
                 panel.addButton(
                         Float.parseFloat(properties[0]),
                         Float.parseFloat(properties[1]),
+                        0,
+                        0,
                         Integer.parseInt(properties[2]),
                         Integer.parseInt(properties[3]),
                         properties[4],
@@ -256,7 +262,7 @@ public class Client {
 
         panel.addUIElements(new TextElement(0.5f, 0.7f, Game.WALL_SIZE * 6, Game.WALL_SIZE, reason, 0.6f));
 
-        panel.addButton(0.5f, 0.4f, Game.WALL_SIZE * 2, Game.WALL_SIZE, "CANCEL", Game::loadMenu, "CANCEL");
+        panel.addButton(0.5f, 0.4f, 0, 0, Game.WALL_SIZE * 2, Game.WALL_SIZE, "CANCEL", Game::loadMenu, "CANCEL");
     }
 
     public void teleport(String packet) {

@@ -10,7 +10,9 @@ import com.badlogic.gdx.utils.Array;
 public class UIElement extends GameObject{
 
     public float x;
+    public int xOffset;
     public float y;
+    public int yOffset;
 
     public String data = "";
     public GlyphLayout layout;
@@ -33,9 +35,9 @@ public class UIElement extends GameObject{
 
     public void update() {
         this.xPos = hasBackgroundPanel?(int) (((Game.WALL_SIZE * 8 * x) + (Gdx.graphics.getWidth() / 2) - (Game.WALL_SIZE * 8 / 2)) - width / 2):
-                (int) ((Gdx.graphics.getWidth() * x) - width / 2);
+                (int) ((Gdx.graphics.getWidth() * x) - width / 2) + xOffset;
         this.yPos = hasBackgroundPanel?(int) (((Game.WALL_SIZE * 8 * y) + (Gdx.graphics.getHeight() / 2) - (Game.WALL_SIZE * 8 / 2)) - height / 2)
-                :(int) ((Gdx.graphics.getHeight() * y) - height / 2);
+                :(int) ((Gdx.graphics.getHeight() * y) - height / 2) + yOffset;
     }
 
     public static void resetTextElements() {

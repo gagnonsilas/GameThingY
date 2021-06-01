@@ -37,19 +37,19 @@ public class GameEditor implements Scene {
         eventEditor = new MenuPanel();
         objectEditor = new MenuPanel();
 
-        panel.addButton(0.05f, 0.94f, Game.WALL_SIZE, Game.WALL_SIZE, ",", this::exit, "X");
-        panel.addButton(0.15f, 0.94f, Game.WALL_SIZE, Game.WALL_SIZE, " ", this::saveMap, "S");
-        panel.addButton(0.88f, 0.90f, Game.WALL_SIZE * 3, Game.WALL_SIZE, ",", this::setMapEditor, "Map");
-        panel.addButton(0.88f, 0.76f, Game.WALL_SIZE * 3, Game.WALL_SIZE, " ", this::setEventEditor, "Events");
-        panel.addButton(0.88f, 0.62f, Game.WALL_SIZE * 3, Game.WALL_SIZE, " ", this::setObjectEditor, "Objects");
+        panel.addButton(0f, 1f, (int)(Game.WALL_SIZE * 0.75), (int)(-Game.WALL_SIZE * 0.75), Game.WALL_SIZE, Game.WALL_SIZE, ",", this::exit, "X");
+        panel.addButton(0f, 1f, (Game.WALL_SIZE * 2), (int)(-Game.WALL_SIZE * 0.75), Game.WALL_SIZE, Game.WALL_SIZE, " ", this::saveMap, "S");
+        panel.addButton(1f, 1f, (int)(-Game.WALL_SIZE * 1.75), (int)(-Game.WALL_SIZE * 0.75), Game.WALL_SIZE * 3, Game.WALL_SIZE, ",", this::setMapEditor, "Map");
+        panel.addButton(1f, 1f, (int)(-Game.WALL_SIZE * 1.75), -Game.WALL_SIZE * 2, Game.WALL_SIZE * 3, Game.WALL_SIZE, " ", this::setEventEditor, "Events");
+        panel.addButton(1f, 1f, (int)(-Game.WALL_SIZE * 1.75), (int)(-Game.WALL_SIZE * 3.25), Game.WALL_SIZE * 3, Game.WALL_SIZE, " ", this::setObjectEditor, "Objects");
 
-        mapEditor.addButton(0.05f, 0.09f, Game.WALL_SIZE, Game.WALL_SIZE, "0", this::setBrush, "E");
-        mapEditor.addButton(0.15f, 0.09f, Game.WALL_SIZE, Game.WALL_SIZE, "1", this::setBrush, "F");
-        mapEditor.addButton(0.25f, 0.09f, Game.WALL_SIZE, Game.WALL_SIZE, "2", this::setBrush, "W");
+        mapEditor.addButton(0f, 0f, (int)(Game.WALL_SIZE * 0.75), (int)(Game.WALL_SIZE * 0.75), Game.WALL_SIZE, Game.WALL_SIZE, "0", this::setBrush, "E");
+        mapEditor.addButton(0f, 0f, Game.WALL_SIZE * 2,    (int)(Game.WALL_SIZE * 0.75), Game.WALL_SIZE, Game.WALL_SIZE, "1", this::setBrush, "F");
+        mapEditor.addButton(0f, 0f, (int)(Game.WALL_SIZE * 3.25), (int)(Game.WALL_SIZE * 0.75), Game.WALL_SIZE, Game.WALL_SIZE, "2", this::setBrush, "W");
 
-        eventEditor.addButton(0.05f, 0.09f, Game.WALL_SIZE, Game.WALL_SIZE, "0", this::setBrush, "+");
-        eventEditor.addButton(0.15f, 0.09f, Game.WALL_SIZE, Game.WALL_SIZE, "1", this::setBrush, "");
-        eventEditor.addButton(0.25f, 0.09f, Game.WALL_SIZE, Game.WALL_SIZE, "2", this::setBrush, "");
+        eventEditor.addButton(0f, 0f, (int)(Game.WALL_SIZE * 0.75), (int)(Game.WALL_SIZE * 0.75), Game.WALL_SIZE, Game.WALL_SIZE, "0", this::setBrush, "+");
+        eventEditor.addButton(0f, 0f, Game.WALL_SIZE * 2, (int)(Game.WALL_SIZE * 0.75), Game.WALL_SIZE, Game.WALL_SIZE, "1", this::setBrush, "");
+        eventEditor.addButton(0f, 0f, (int)(Game.WALL_SIZE * 3.25), (int)(Game.WALL_SIZE * 0.75), Game.WALL_SIZE, Game.WALL_SIZE, "2", this::setBrush, "");
 
         editorPanel = mapEditor;
 
