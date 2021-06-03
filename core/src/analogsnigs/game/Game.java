@@ -54,7 +54,7 @@ public class Game extends ApplicationAdapter {
 
 		Map.loadMapAutoTiler();
 
-		fontFile = Gdx.files.internal("font/Pixeled-30.fnt");
+		fontFile = Gdx.files.internal("font/PixelFont.fnt");
 
 		Gdx.input.setInputProcessor(INPUT);
 
@@ -100,7 +100,7 @@ public class Game extends ApplicationAdapter {
 		for (UIElement element : UIElement.textObjects) {
 			element.font.draw(batch, element.layout,
 					element.xPos + (element.width - element.layout.width) / 2 + (element.isOffset? offset[0] : 0),
-					element.yPos + (element.height + element.layout.height) / 2 + (element.isOffset? offset[1] : 0));
+					element.yPos + (element.height - element.layout.height) / 2 + 6 + (element.isOffset? offset[1] : 0));
 		}
 
 		batch.end();

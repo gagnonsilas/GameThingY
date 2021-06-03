@@ -1,6 +1,7 @@
-package analogsnigs.game.gameobjects;
+package analogsnigs.game.player;
 
 import analogsnigs.game.Game;
+import analogsnigs.game.gameobjects.GameObject;
 import analogsnigs.game.menu.TextElement;
 import analogsnigs.game.utilities.Collider;
 import com.badlogic.gdx.graphics.Color;
@@ -9,7 +10,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Character extends GameObject{
+public class Character extends GameObject {
 
     public String name;
 
@@ -36,7 +37,7 @@ public class Character extends GameObject{
         setHue(hue);
         characters.add(this);
         addToDrawable();
-        nameTag = new TextElement(xPos + width / 2, yPos + height + 30, 50, 50, name, 0.6f, true, new Color(0.3f, 0.3f, 0.3f, 0.8f));
+        nameTag = new TextElement(xPos + width / 2, yPos + height + 30, Game.WALL_SIZE * 2, Game.WALL_SIZE / 2, name, 0.8f, true, new Color(0f, 0f, 0f, 0.8f));
 
     }
 

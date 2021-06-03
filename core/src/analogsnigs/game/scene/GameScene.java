@@ -2,7 +2,7 @@ package analogsnigs.game.scene;
 
 import analogsnigs.game.Game;
 import analogsnigs.game.client.Client;
-import analogsnigs.game.gameobjects.Character;
+import analogsnigs.game.player.Character;
 import analogsnigs.game.gameobjects.GameObject;
 import analogsnigs.game.menu.MenuPanel;
 import analogsnigs.game.menu.UIElement;

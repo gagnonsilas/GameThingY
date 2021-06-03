@@ -27,7 +27,7 @@ public class Button extends UIElement {
         this.method = method;
         this.color = Color.WHITE;
         font = Game.FONT;
-        font.getData().setScale(0.6f);
+        font.getData().setScale(1f);
         font.setColor(Game.FONT_COLOR);
         layout = new GlyphLayout(font, buttonText);
 

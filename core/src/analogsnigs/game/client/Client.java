@@ -13,7 +13,7 @@ import com.github.czyzby.websocket.WebSocket;
 import com.github.czyzby.websocket.WebSocketListener;
 import com.github.czyzby.websocket.WebSockets;
 import com.github.czyzby.websocket.data.WebSocketCloseCode;
-import analogsnigs.game.gameobjects.Character;
+import analogsnigs.game.player.Character;
 
 public class Client {
     WebSocket socket;

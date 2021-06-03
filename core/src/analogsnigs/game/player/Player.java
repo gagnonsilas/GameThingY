@@ -1,7 +1,6 @@
 package analogsnigs.game.player;
 
 import analogsnigs.game.Game;
-import analogsnigs.game.gameobjects.Character;
 import analogsnigs.game.utilities.Joystick;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;

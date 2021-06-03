@@ -2,7 +2,7 @@ package analogsnigs.game.editor;
 
 import analogsnigs.game.Game;
 import analogsnigs.game.gameobjects.Barrier;
-import analogsnigs.game.gameobjects.Character;
+import analogsnigs.game.player.Character;
 import analogsnigs.game.gameobjects.GameObject;
 import analogsnigs.game.menu.MenuPanel;
 import analogsnigs.game.menu.UIElement;

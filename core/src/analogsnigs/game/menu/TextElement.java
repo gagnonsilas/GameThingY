@@ -2,6 +2,7 @@ package analogsnigs.game.menu;
 
 import analogsnigs.game.Game;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 
 public class TextElement extends UIElement{
@@ -18,8 +19,6 @@ public class TextElement extends UIElement{
         // Split into rows of appropriate length
         int lettersPerRow = (width / 64) * 3;
 
-//        System.out.println(lettersPerRow);
-
         for (int i = 0; i < text.length() / lettersPerRow; i++) {
             for (int j = 0; j < text.length(); j++) {
                 if (text.substring((lettersPerRow * i) + j, (lettersPerRow * i) + j + 1).equals(" ")) {
@@ -30,8 +29,8 @@ public class TextElement extends UIElement{
         }
         this.data = text;
 
-        font = Game.FONT;
-        font.getData().setScale(scale);
+        font = new BitmapFont(Game.fontFile);
+        font.getData().setScale(1);
 
         layout = new GlyphLayout(font, data);
 
@@ -49,7 +48,7 @@ public class TextElement extends UIElement{
         this.color = Color.WHITE;
         this.data = text;
 
-        font = Game.FONT;
+        font = new BitmapFont(Game.fontFile);
         font.getData().setScale(scale);
         font.setColor(color);
         layout = new GlyphLayout(font, data);
