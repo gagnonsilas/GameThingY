@@ -18,10 +18,13 @@ public class GameEditor implements Scene {
 
     Map map = new Map(new int[mapSize][mapSize]);
 
+
+
     MenuPanel panel;
     MenuPanel mapEditor;
     MenuPanel eventEditor;
     MenuPanel objectEditor;
+    MenuPanel panelEditor;
 
     MenuPanel editorPanel;
 
@@ -30,7 +33,7 @@ public class GameEditor implements Scene {
     public int brush = 1;
 
     public GameEditor(String name) {
-        player = new Player(new Character(mapSize*Game.WALL_SIZE / 2, mapSize*Game.WALL_SIZE / 2, 45, 45, name, (int) Math.round(Math.random() * 360)));
+        player = new Player(new Character(mapSize*Game.WALL_SIZE / 2, mapSize*Game.WALL_SIZE / 2, Game.WALL_SIZE, Game.WALL_SIZE, name, (int) Math.round(Math.random() * 360)));
 
         panel = new MenuPanel();
         mapEditor = new MenuPanel();
@@ -41,6 +44,7 @@ public class GameEditor implements Scene {
         panel.addButton(0f, 1f, (Game.WALL_SIZE * 2), (int)(-Game.WALL_SIZE * 0.75), Game.WALL_SIZE, Game.WALL_SIZE, " ", this::saveMap, "S");
         panel.addButton(1f, 1f, (int)(-Game.WALL_SIZE * 1.75), (int)(-Game.WALL_SIZE * 0.75), Game.WALL_SIZE * 3, Game.WALL_SIZE, ",", this::setMapEditor, "Map");
         panel.addButton(1f, 1f, (int)(-Game.WALL_SIZE * 1.75), -Game.WALL_SIZE * 2, Game.WALL_SIZE * 3, Game.WALL_SIZE, " ", this::setEventEditor, "Events");
+        panel.addButton(1f, 1f, (int)(-Game.WALL_SIZE * 1.75), (int)(-Game.WALL_SIZE * 3.25), Game.WALL_SIZE * 3, Game.WALL_SIZE, " ", this::setObjectEditor, "Objects");
         panel.addButton(1f, 1f, (int)(-Game.WALL_SIZE * 1.75), (int)(-Game.WALL_SIZE * 3.25), Game.WALL_SIZE * 3, Game.WALL_SIZE, " ", this::setObjectEditor, "Objects");
 
         mapEditor.addButton(0f, 0f, (int)(Game.WALL_SIZE * 0.75), (int)(Game.WALL_SIZE * 0.75), Game.WALL_SIZE, Game.WALL_SIZE, "0", this::setBrush, "E");

@@ -20,7 +20,7 @@ public class GameScene implements Scene{
 
     public GameScene(String name) {
         // Create characters client instance and menus
-        player = new Player(new Character(100, 100, 45, 45, name, (int) Math.round(Math.random() * 360)));
+        player = new Player(new Character(100, 100, (Game.WALL_SIZE / 4) * 3, (Game.WALL_SIZE / 4) * 3, name, (int) Math.round(Math.random() * 360)));
         client = new Client(this);
         panel = new MenuPanel();
         panel.addButton(0f, 1f, (int)(Game.WALL_SIZE * 0.75), (int)(-Game.WALL_SIZE * 0.75), Game.WALL_SIZE, Game.WALL_SIZE, ",", this::disconnect, "X");
