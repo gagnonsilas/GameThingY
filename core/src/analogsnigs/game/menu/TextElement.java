@@ -30,7 +30,7 @@ public class TextElement extends UIElement{
         this.data = text;
 
         font = new BitmapFont(Game.fontFile);
-        font.getData().setScale(1);
+        font.getData().setScale(scale);
 
         layout = new GlyphLayout(font, data);
 
@@ -48,8 +48,8 @@ public class TextElement extends UIElement{
         this.color = Color.WHITE;
         this.data = text;
 
-        font = new BitmapFont(Game.fontFile);
-        font.getData().setScale(scale);
+        font = Game.FONT;
+//        font.getData().setScale(scale);
         font.setColor(color);
         layout = new GlyphLayout(font, data);
 

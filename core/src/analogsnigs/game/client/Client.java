@@ -132,9 +132,12 @@ public class Client {
             if(characterData[0].equals(Player.character.name)) {
                 continue;
             }
-            Character.findCharacterByName(characterData[0]).moveToPoint(Integer.parseInt(characterData[1]),
-                    Integer.parseInt(characterData[2]));
-            Character.findCharacterByName(characterData[0]).setHue(Integer.parseInt(characterData[5]));
+            Character thisChar = Character.findCharacterByName(characterData[0]);
+            thisChar.moveToPoint(Integer.parseInt(characterData[1]), Integer.parseInt(characterData[2]));
+            thisChar.setHue(Integer.parseInt(characterData[5]));
+            thisChar.width = Integer.parseInt(characterData[3]);
+            thisChar.height = Integer.parseInt(characterData[4]);
+
         }
     }
 
