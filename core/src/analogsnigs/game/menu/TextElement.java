@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 
+import java.awt.*;
+
 public class TextElement extends UIElement{
 
     public TextElement (float x, float y, int width, int height, String text, float scale) {
@@ -29,8 +31,8 @@ public class TextElement extends UIElement{
         }
         this.data = text;
 
-        font = new BitmapFont(Game.fontFile);
-        font.getData().setScale(scale);
+        font = Game.FONT;
+//        font.getData().setScale(scale);
 
         layout = new GlyphLayout(font, data);
 

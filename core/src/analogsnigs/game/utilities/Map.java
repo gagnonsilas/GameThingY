@@ -8,7 +8,7 @@ import com.badlogic.gdx.utils.Array;
 
 public class Map {
 
-    int[][] map;
+    public int[][] map;
 
     Array<GameObject> objectMap = new Array<>();
     private static int[][][] tiles;
@@ -96,7 +96,7 @@ public class Map {
     }
 
     public Map(int[][] map) {
-        setMap(map, true);
+        this.map = map;
     }
 
     public void setMap(int[][] map, boolean hasColliders) {
@@ -117,8 +117,8 @@ public class Map {
                     continue;
                 }
                 if(map[i][j] == 1) {
-                    objectMap.add(new GameElement(j * Game.WALL_SIZE,
-                            (map.length - i )* Game.WALL_SIZE,
+                    objectMap.add(new GameElement(j * Constants.WALL_SIZE,
+                            (map.length - i )* Constants.WALL_SIZE,
                             0,
                             new TextureRegion(Game.MAP_TEXTURES, 16, 16, 16, 16)));
                     continue;
@@ -127,8 +127,8 @@ public class Map {
                 // Loop through each tile type
                 for (int[][] tile : tiles) {
                     if(tileTypeWorks(tile, i, j)) {
-                        objectMap.add(new GameElement(j * Game.WALL_SIZE,
-                                        (map.length - i )* Game.WALL_SIZE,
+                        objectMap.add(new GameElement(j * Constants.WALL_SIZE,
+                                        (map.length - i )* Constants.WALL_SIZE,
                                         (map[i][j] != 2 || !hasColliders?0:1),
                                         new TextureRegion(Game.MAP_TEXTURES, tile[3][0]*16, tile[3][1]*16, 16, 16)));
                         break;

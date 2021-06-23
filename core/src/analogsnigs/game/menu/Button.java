@@ -1,6 +1,7 @@
 package analogsnigs.game.menu;
 
 import analogsnigs.game.Game;
+import analogsnigs.game.utilities.Constants;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
@@ -33,15 +34,46 @@ public class Button extends UIElement {
 
         int textureXPos = 0;
 
-        for (int i = (width / Game.WALL_SIZE) - 1; i > 0; i--) {
+        for (int i = (width / Constants.WALL_SIZE) - 1; i > 0; i--) {
             textureXPos += i;
         }
 
         drawingLayer = 2;
         addToDrawable();
         this.reload();
-        textureRegion = new TextureRegion(Game.TEXTURE_SHEET, textureXPos * 16, 48, (width / Game.WALL_SIZE) * 16, 16);
+        textureRegion = new TextureRegion(Game.TEXTURE_SHEET, textureXPos * 16, 48, (width / Constants.WALL_SIZE) * 16, 16);
     }
+
+
+    public Button(float x, float y, int xOffset, int yOffset, int width, int height, String data, Consumer<String> method, String buttonText) {
+        this.hasBackgroundPanel = false;
+        this.x = x;
+        this.y = y;
+        this.xOffset = xOffset;
+        this.yOffset = yOffset;
+        super.update();
+        this.data = data;
+        this.width = width;
+        this.height = height;
+        this.method = method;
+        this.color = Color.WHITE;
+        font = Game.FONT;
+        font.getData().setScale(1f);
+        font.setColor(Game.FONT_COLOR);
+        layout = new GlyphLayout(font, buttonText);
+
+        int textureXPos = 0;
+
+        for (int i = (width / Constants.WALL_SIZE) - 1; i > 0; i--) {
+            textureXPos += i;
+        }
+
+        drawingLayer = 2;
+        addToDrawable();
+        this.reload();
+        textureRegion = new TextureRegion(Game.TEXTURE_SHEET, textureXPos * 16, 48, (width / Constants.WALL_SIZE) * 16, 16);
+    }
+
 
     public void addLinkedElement(UIElement linkedElement) {
         elements.add(linkedElement);

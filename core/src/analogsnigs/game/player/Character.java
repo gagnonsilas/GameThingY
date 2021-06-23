@@ -4,18 +4,21 @@ import analogsnigs.game.Game;
 import analogsnigs.game.gameobjects.GameObject;
 import analogsnigs.game.menu.TextElement;
 import analogsnigs.game.utilities.Collider;
+import analogsnigs.game.utilities.Constants;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Character extends GameObject {
 
+    public transient static HashMap<String, Character> characters = new HashMap<>();
+    public transient TextElement nameTag;
+
+
     public String name;
-
-    public static List<Character> characters = new ArrayList<>();
-
     private int setX;
     private int setY;
     private int moveX;
@@ -23,7 +26,6 @@ public class Character extends GameObject {
 
     public int hue;
 
-    public TextElement nameTag;
 
     public Character(int xPos, int yPos, int width, int height, String name, int hue) {
         this.xPos = xPos;
@@ -35,10 +37,13 @@ public class Character extends GameObject {
         this.drawingLayer = 1;
         this.textureRegion = new TextureRegion(Game.TEXTURE_SHEET, 0, 16, 16, 16);
         setHue(hue);
-        characters.add(this);
+        characters.put(name, this);
         addToDrawable();
-        nameTag = new TextElement(xPos + width / 2, yPos + height + 30, Game.WALL_SIZE * 2, Game.WALL_SIZE / 2, name, 0.8f, true, new Color(0f, 0f, 0f, 0.8f));
+        nameTag = new TextElement(xPos + width / 2, yPos + height + 30, Constants.WALL_SIZE * 2, Constants.WALL_SIZE / 2, name, 0.8f, true, new Color(0f, 0f, 0f, 0.8f));
 
+    }
+
+    public Character() {
     }
 
     public void moveToPoint(int xPos, int yPos) {
@@ -60,7 +65,7 @@ public class Character extends GameObject {
     }
 
     public static void moveCharacters() {
-        for (Character character : characters) {
+        for (Character character : characters.values()) {
             character.update();
         }
     }
@@ -72,23 +77,13 @@ public class Character extends GameObject {
         characters.remove(this);
     }
 
-    public static Character findCharacterByName(String name) {
-        for (Character character : characters) {
-            if(character.name.equals(name)) {
-               return character;
-            }
-        }
-
-        return new Character(0, 0, 45, 45, name, 0);
-    }
-
     public void setHue(int hue) {
         this.hue = hue;
         this.color = new Color(0, 0, 0, 1).fromHsv( hue, 0.5f, 1f);
     }
 
     public static void deleteAll() {
-        characters = new ArrayList<>();
+        characters = new HashMap<>();
     }
 
     public void hideNameTag() {

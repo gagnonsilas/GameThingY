@@ -11,16 +11,16 @@ import java.util.Comparator;
 
 public class GameObject {
 
-    public static Array<GameObject> drawableObjects = new Array<>();
-    public static Array<GameObject> backgroundObjects = new Array<>();
-    public static Array<GameObject> foregroundObjects = new Array<>();
+    public transient static Array<GameObject> drawableObjects = new Array<>();
+    public transient static Array<GameObject> backgroundObjects = new Array<>();
+    public transient static Array<GameObject> foregroundObjects = new Array<>();
 
-    public TextureRegion textureRegion;
+    public transient TextureRegion textureRegion;
     public int xPos;
     public int yPos;
     public int width;
     public int height;
-    public Collider collider;
+    public transient Collider collider;
     public int drawingLayer;
 
     public Color color = Color.WHITE;

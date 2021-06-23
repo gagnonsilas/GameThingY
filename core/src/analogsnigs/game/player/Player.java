@@ -1,6 +1,7 @@
 package analogsnigs.game.player;
 
 import analogsnigs.game.Game;
+import analogsnigs.game.utilities.Constants;
 import analogsnigs.game.utilities.Joystick;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -8,7 +9,7 @@ import com.badlogic.gdx.Input;
 
 public class Player {
 
-    private Joystick joystick;
+    private transient Joystick joystick;
 
     public float speed = 400;
 
@@ -17,7 +18,7 @@ public class Player {
     public Player(Character character) {
         Player.character = character;
         if(Game.isMobile) {
-            joystick = new Joystick(Game.WALL_SIZE * 2, Game.WALL_SIZE * 2);
+            joystick = new Joystick(Constants.WALL_SIZE * 2, Constants.WALL_SIZE * 2);
         }
     }
 

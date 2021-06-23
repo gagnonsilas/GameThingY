@@ -6,9 +6,9 @@ import java.util.List;
 
 public class Collider {
 
-    private static List<Collider> colliders = new ArrayList<>();
+    private transient static List<Collider> colliders = new ArrayList<>();
     private final boolean isStatic;
-    private final GameObject gameObject;
+    private transient final GameObject gameObject;
 
     private final int[] boundingBox;
 

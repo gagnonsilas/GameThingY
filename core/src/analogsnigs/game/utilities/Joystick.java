@@ -18,8 +18,8 @@ public class Joystick extends UIElement {
         this.y = yPos;
         this.xPos = xPos;
         this.yPos = yPos;
-        this.width = (Game.WALL_SIZE / 16) * 10;
-        this.height = (Game.WALL_SIZE / 16) * 10;
+        this.width = (Constants.WALL_SIZE / 16) * 10;
+        this.height = (Constants.WALL_SIZE / 16) * 10;
         this.drawingLayer = 2;
         this.color = Color.WHITE;
         this.textureRegion = new TextureRegion(Game.TEXTURE_SHEET, 16, 4 * 16, 10, 10);
@@ -42,16 +42,16 @@ public class Joystick extends UIElement {
             } else if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
                 float length = (float) Math.sqrt(((inX - x) * (inX - x)) +
                         ((inY - y) * (inY - y)));
-                if (length < Game.WALL_SIZE) {
+                if (length < Constants.WALL_SIZE) {
                     xPos = inX;
                     yPos = inY;
-                    xOffset = (inX - x) / (Game.WALL_SIZE * 1f);
-                    yOffset = (inY - y) / (Game.WALL_SIZE * 1f);
+                    xOffset = (inX - x) / (Constants.WALL_SIZE * 1f);
+                    yOffset = (inY - y) / (Constants.WALL_SIZE * 1f);
                 } else {
                     xOffset = (inX - x) / (length);
                     yOffset = (inY - y) / (length);
-                    xPos = (int) (x + (xOffset * Game.WALL_SIZE));
-                    yPos = (int) (y + (yOffset * Game.WALL_SIZE));
+                    xPos = (int) (x + (xOffset * Constants.WALL_SIZE));
+                    yPos = (int) (y + (yOffset * Constants.WALL_SIZE));
                 }
                 return new float[]{xOffset, yOffset};
             } else {

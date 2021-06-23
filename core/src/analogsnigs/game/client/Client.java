@@ -1,44 +1,54 @@
 package analogsnigs.game.client;
 
-import analogsnigs.game.Game;
 import analogsnigs.game.gameobjects.GameElement;
 import analogsnigs.game.menu.Button;
 import analogsnigs.game.menu.MenuPanel;
 import analogsnigs.game.menu.TextElement;
 import analogsnigs.game.menu.TextInputField;
+import analogsnigs.game.minigame.Game;
+import analogsnigs.game.minigame.GamePlayObject;
 import analogsnigs.game.player.Player;
 import analogsnigs.game.scene.Scene;
 import analogsnigs.game.utilities.Map;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.github.czyzby.websocket.WebSocket;
 import com.github.czyzby.websocket.WebSocketListener;
 import com.github.czyzby.websocket.WebSockets;
 import com.github.czyzby.websocket.data.WebSocketCloseCode;
 import analogsnigs.game.player.Character;
+import com.google.gson.Gson;
+import analogsnigs.game.utilities.Constants;
+
+import java.lang.reflect.Type;
+import java.util.HashMap;
 
 public class Client {
     WebSocket socket;
     Map map;
     MenuPanel panel;
     Scene game;
+    private final Gson gson = new Gson();
 
     public Client(Scene game) {
 //        socket = WebSockets.newSocket("wss://analog-snigs-games.herokuapp.com");
         socket = WebSockets.newSocket("ws://localhost:8753");
         this.game = game;
         this.map = new Map(new int[0][]);
+        this.map.setMap(new int[0][], true);
         panel = new MenuPanel();
         socket.setSendGracefully(true);
         socket.addListener(new WebSocketListener() {
             @Override
             public boolean onOpen(WebSocket webSocket) {
-                webSocket.send("#0" + Player.character.name);
+                Packet packet = new Packet(Constants.ADD_PLAYER, Player.character);
+                String output = new Gson().toJson(packet);
+                socket.send(output);
                 return false;
             }
 
             @Override
             public boolean onClose(WebSocket webSocket, WebSocketCloseCode code, String reason) {
                 Character.deleteAll();
-
                 return false;
             }
 
@@ -63,101 +73,58 @@ public class Client {
     }
 
     public void sendCharacter() {
-        String output = "#1" + Player.character.name + "," +
-                Player.character.xPos + "," +
-                Player.character.yPos + "," +
-                Player.character.width + "," +
-                Player.character.height + "," +
-                Player.character.hue + ",";
+        Packet packet = new Packet(Constants.SEND_PLAYER, Player.character);
+        String output = new Gson().toJson(packet);
         socket.send(output);
     }
 
-    public void parsePacket(String packet) {
-        if(packet.contains("#1")) {
-            characterUpdate(packet.substring(2));
-        }
-        else if(packet.contains("#0")) {
-            addCharacter(packet.substring(2));
-        }
-        else if(packet.contains("#2")) {
-            loadObject(packet.substring(2));
-        }
-        else if(packet.contains("#3")) {
-            System.out.println(packet.substring(2));
-        }
-        else if(packet.contains("#4")) {
-            loadMap(stringTo2DArray(packet.substring(2)));
-        }
-        else if(packet.contains("#5")) {
-            loadMenuPanel(packet.substring(2));
-        }
-        else if(packet.contains("#6")) {
-            teleport(packet.substring(2));
-        }
-        else if(packet.contains("#-1")) {
-            connectionError(packet.substring(3));
-        }
-    }
-
-    public int[][] stringTo2DArray(String input) {
-
-        String[] inputSplit = input.split("~");
-
-        String[][] inputSplit2 = new String[inputSplit.length][];
-
-        for (int i = 0; i < inputSplit.length; i++) {
-            inputSplit2[i] = inputSplit[i].split(",");
-        }
-
-        int[][] outputArray = new int[inputSplit2.length][inputSplit2[0].length];
-
-        try{
-            for (int i = 0; i < inputSplit2.length; i++) {
-                for (int j = 0; j < inputSplit2[i].length; j++) {
-                    outputArray[i][j] = Integer.parseInt(inputSplit2[i][j]);
+    public void parsePacket(String data) {
+        Packet packet = new Gson().fromJson(data, Packet.class);
+        switch (packet.id){
+            case Constants.SEND_GAME:
+                Game game = gson.fromJson(gson.toJson(packet.object), Game.class);
+                loadMap(game.getMap());
+                Player.character.move(game.spawnPoint[0], game.spawnPoint[1]);
+                for (GamePlayObject object : game.objects) {
+                    object.textureRegion = new TextureRegion(analogsnigs.game.Game.TEXTURE_SHEET, 32, object.textureID * 16);
                 }
-            }
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+                for (analogsnigs.game.server.Player player : game.players.values()) {
+                    addCharacter(player);
+                }
+                break;
+            case Constants.ADD_PLAYER:
+                Character player = gson.fromJson(gson.toJson(packet.object), Character.class);
+                addCharacter(player);
+            case Constants.SEND_PLAYER:
+                updateCharacter(gson.fromJson(gson.toJson(packet.object), Character.class));
 
-        return outputArray;
-    }
-
-    public void characterUpdate(String packet) {
-        String[] characters = packet.split("~");
-        for (String character : characters) {
-            String[] characterData = character.split(",");
-            if(characterData[0].equals(Player.character.name)) {
-                continue;
-            }
-            Character thisChar = Character.findCharacterByName(characterData[0]);
-            thisChar.moveToPoint(Integer.parseInt(characterData[1]), Integer.parseInt(characterData[2]));
-            thisChar.setHue(Integer.parseInt(characterData[5]));
-            thisChar.width = Integer.parseInt(characterData[3]);
-            thisChar.height = Integer.parseInt(characterData[4]);
-
+            default:
         }
     }
 
-    public void addCharacter(String packet) {
+    public void updateCharacter(Character player) {
+        if(player.name.equals(Player.character.name)) {
+            return;
+        }
+        Character character = Character.characters.get(player.name);
 
-        String[] characters = packet.split("~");
-        for (String character : characters) {
-            String[] characterData = character.split(",");
-            if(characterData[1].equals("exit")) {
-                Character.findCharacterByName(characterData[0]).deleteCharacter();
-            }
-            else if(!characterData[0].equals(Player.character.name)){
-                System.out.println(characterData[0] + " Joined The Game");
-                new Character(Integer.parseInt(characterData[2]),
-                        Integer.parseInt(characterData[3]),
-                        Integer.parseInt(characterData[4]),
-                        Integer.parseInt(characterData[5]),
-                        characterData[0],
-                        Integer.parseInt(characterData[6]));
-            }
+        character.moveToPoint(player.xPos, player.yPos);
+        character.setHue(player.hue);
+        character.width = player.width;
+        character.height = player.height;
+    }
+
+    public void addCharacter(Character player) {
+        if (!player.name.equals(Player.character.name)) {
+            System.out.println(player.name + " Joined The Game");
+            new Character(
+                    player.xPos,
+                    player.yPos,
+                    player.width,
+                    player.height,
+                    player.name,
+                    player.hue
+            );
         }
     }
 
@@ -184,7 +151,7 @@ public class Client {
                 String[] buttonProperties = element.split("&")[0].split(",");
                 String[] elementProperties = element.split("&")[1].split(",");
 
-                Button button = panel.addButton(
+                Button button = panel.addButton(new Button(
                         Float.parseFloat(buttonProperties[0]),
                         Float.parseFloat(buttonProperties[1]),
                         0,
@@ -193,7 +160,7 @@ public class Client {
                         Integer.parseInt(buttonProperties[3]),
                         buttonProperties[4],
                         this::sendPanelData,
-                        buttonProperties[5] );
+                        buttonProperties[5] ));
 
                 if(elementProperties[4].equals("input")) {
                     button.addLinkedElement(new TextInputField(Float.parseFloat(elementProperties[0]),
@@ -211,7 +178,7 @@ public class Client {
             }
             else {
                 String[] properties = element.split(",");
-                panel.addButton(
+                panel.addButton(new Button(
                         Float.parseFloat(properties[0]),
                         Float.parseFloat(properties[1]),
                         0,
@@ -220,25 +187,13 @@ public class Client {
                         Integer.parseInt(properties[3]),
                         properties[4],
                         this::sendPanelData,
-                        properties[5]);
+                        properties[5]));
             }
 
 
 
         }
 
-
-    }
-
-    public void loadObject(String packet) {
-        String[] object = packet.split(",");
-
-        new GameElement(Integer.parseInt(object[0]),
-                Integer.parseInt(object[1]),
-                Integer.parseInt(object[2]),
-                Integer.parseInt(object[3]),
-                1
-        ).addToDrawable();
 
     }
 
@@ -263,14 +218,9 @@ public class Client {
 
         panel = new MenuPanel(true);
 
-        panel.addUIElements(new TextElement(0.5f, 0.7f, Game.WALL_SIZE * 6, Game.WALL_SIZE, reason, 0.6f));
+        panel.addUIElements(new TextElement(0.5f, 0.7f, Constants.WALL_SIZE * 6, Constants.WALL_SIZE, reason, 0.6f));
 
-        panel.addButton(0.5f, 0.4f, 0, 0, Game.WALL_SIZE * 2, Game.WALL_SIZE, "CANCEL", Game::loadMenu, "CANCEL");
+        panel.addButton(new Button(0.5f, 0.4f, 0, 0, Constants.WALL_SIZE * 2, Constants.WALL_SIZE, "CANCEL", analogsnigs.game.Game::loadMenu, "CANCEL"));
     }
 
-    public void teleport(String packet) {
-        String[] data = packet.split(",");
-
-        Player.character.move(Integer.parseInt(data[1]), Integer.parseInt(data[2]));
-    }
 }

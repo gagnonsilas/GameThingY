@@ -2,23 +2,23 @@ package analogsnigs.game.editor;
 
 import analogsnigs.game.Game;
 import analogsnigs.game.gameobjects.Barrier;
+import analogsnigs.game.menu.Button;
 import analogsnigs.game.player.Character;
 import analogsnigs.game.gameobjects.GameObject;
 import analogsnigs.game.menu.MenuPanel;
 import analogsnigs.game.menu.UIElement;
 import analogsnigs.game.player.Player;
 import analogsnigs.game.scene.Scene;
+import analogsnigs.game.utilities.Constants;
 import analogsnigs.game.utilities.Map;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 
 public class GameEditor implements Scene {
 
-    int mapSize = Game.WALL_SIZE;
+    int mapSize = Constants.WALL_SIZE;
 
     Map map = new Map(new int[mapSize][mapSize]);
-
-
 
     MenuPanel panel;
     MenuPanel mapEditor;
@@ -33,37 +33,37 @@ public class GameEditor implements Scene {
     public int brush = 1;
 
     public GameEditor(String name) {
-        player = new Player(new Character(mapSize*Game.WALL_SIZE / 2, mapSize*Game.WALL_SIZE / 2, Game.WALL_SIZE, Game.WALL_SIZE, name, (int) Math.round(Math.random() * 360)));
-
+        player = new Player(new Character(mapSize* Constants.WALL_SIZE / 2, mapSize* Constants.WALL_SIZE / 2, Constants.WALL_SIZE, Constants.WALL_SIZE, name, (int) Math.round(Math.random() * 360)));
+        map.setMap(new int[mapSize][mapSize], true);
         panel = new MenuPanel();
         mapEditor = new MenuPanel();
         eventEditor = new MenuPanel();
         objectEditor = new MenuPanel();
 
-        panel.addButton(0f, 1f, (int)(Game.WALL_SIZE * 0.75), (int)(-Game.WALL_SIZE * 0.75), Game.WALL_SIZE, Game.WALL_SIZE, ",", this::exit, "X");
-        panel.addButton(0f, 1f, (Game.WALL_SIZE * 2), (int)(-Game.WALL_SIZE * 0.75), Game.WALL_SIZE, Game.WALL_SIZE, " ", this::saveMap, "S");
-        panel.addButton(1f, 1f, (int)(-Game.WALL_SIZE * 1.75), (int)(-Game.WALL_SIZE * 0.75), Game.WALL_SIZE * 3, Game.WALL_SIZE, ",", this::setMapEditor, "Map");
-        panel.addButton(1f, 1f, (int)(-Game.WALL_SIZE * 1.75), -Game.WALL_SIZE * 2, Game.WALL_SIZE * 3, Game.WALL_SIZE, " ", this::setEventEditor, "Events");
-        panel.addButton(1f, 1f, (int)(-Game.WALL_SIZE * 1.75), (int)(-Game.WALL_SIZE * 3.25), Game.WALL_SIZE * 3, Game.WALL_SIZE, " ", this::setObjectEditor, "Objects");
-        panel.addButton(1f, 1f, (int)(-Game.WALL_SIZE * 1.75), (int)(-Game.WALL_SIZE * 3.25), Game.WALL_SIZE * 3, Game.WALL_SIZE, " ", this::setObjectEditor, "Objects");
+        panel.addButton(new Button(0f, 1f, (int)(Constants.WALL_SIZE * 0.75), (int)(-Constants.WALL_SIZE * 0.75), Constants.WALL_SIZE, Constants.WALL_SIZE, ",", this::exit, "X"));
+        panel.addButton(new Button(0f, 1f, (Constants.WALL_SIZE * 2), (int)(-Constants.WALL_SIZE * 0.75), Constants.WALL_SIZE, Constants.WALL_SIZE, " ", this::saveMap, "S"));
+        panel.addButton(new Button(1f, 1f, (int)(-Constants.WALL_SIZE * 1.75), (int)(-Constants.WALL_SIZE * 0.75), Constants.WALL_SIZE * 3, Constants.WALL_SIZE, ",", this::setMapEditor, "Map"));
+        panel.addButton(new Button(1f, 1f, (int)(-Constants.WALL_SIZE * 1.75), -Constants.WALL_SIZE * 2, Constants.WALL_SIZE * 3, Constants.WALL_SIZE, " ", this::setEventEditor, "Events"));
+        panel.addButton(new Button(1f, 1f, (int)(-Constants.WALL_SIZE * 1.75), (int)(-Constants.WALL_SIZE * 3.25), Constants.WALL_SIZE * 3, Constants.WALL_SIZE, " ", this::setObjectEditor, "Objects"));
+        panel.addButton(new Button(1f, 1f, (int)(-Constants.WALL_SIZE * 1.75), (int)(-Constants.WALL_SIZE * 3.25), Constants.WALL_SIZE * 3, Constants.WALL_SIZE, " ", this::setObjectEditor, "Objects"));
 
-        mapEditor.addButton(0f, 0f, (int)(Game.WALL_SIZE * 0.75), (int)(Game.WALL_SIZE * 0.75), Game.WALL_SIZE, Game.WALL_SIZE, "0", this::setBrush, "E");
-        mapEditor.addButton(0f, 0f, Game.WALL_SIZE * 2,    (int)(Game.WALL_SIZE * 0.75), Game.WALL_SIZE, Game.WALL_SIZE, "1", this::setBrush, "F");
-        mapEditor.addButton(0f, 0f, (int)(Game.WALL_SIZE * 3.25), (int)(Game.WALL_SIZE * 0.75), Game.WALL_SIZE, Game.WALL_SIZE, "2", this::setBrush, "W");
+        mapEditor.addButton(new Button(0f, 0f, (int)(Constants.WALL_SIZE * 0.75), (int)(Constants.WALL_SIZE * 0.75), Constants.WALL_SIZE, Constants.WALL_SIZE, "0", this::setBrush, "E"));
+        mapEditor.addButton(new Button(0f, 0f, Constants.WALL_SIZE * 2,    (int)(Constants.WALL_SIZE * 0.75), Constants.WALL_SIZE, Constants.WALL_SIZE, "1", this::setBrush, "F"));
+        mapEditor.addButton(new Button(0f, 0f, (int)(Constants.WALL_SIZE * 3.25), (int)(Constants.WALL_SIZE * 0.75), Constants.WALL_SIZE, Constants.WALL_SIZE, "2", this::setBrush, "W"));
 
-        eventEditor.addButton(0f, 0f, (int)(Game.WALL_SIZE * 0.75), (int)(Game.WALL_SIZE * 0.75), Game.WALL_SIZE, Game.WALL_SIZE, "0", this::setBrush, "+");
-        eventEditor.addButton(0f, 0f, Game.WALL_SIZE * 2, (int)(Game.WALL_SIZE * 0.75), Game.WALL_SIZE, Game.WALL_SIZE, "1", this::setBrush, "");
-        eventEditor.addButton(0f, 0f, (int)(Game.WALL_SIZE * 3.25), (int)(Game.WALL_SIZE * 0.75), Game.WALL_SIZE, Game.WALL_SIZE, "2", this::setBrush, "");
+        eventEditor.addButton(new Button(0f, 0f, (int)(Constants.WALL_SIZE * 0.75), (int)(Constants.WALL_SIZE * 0.75), Constants.WALL_SIZE, Constants.WALL_SIZE, "0", this::setBrush, "+"));
+        eventEditor.addButton(new Button(0f, 0f, Constants.WALL_SIZE * 2, (int)(Constants.WALL_SIZE * 0.75), Constants.WALL_SIZE, Constants.WALL_SIZE, "1", this::setBrush, ""));
+        eventEditor.addButton(new Button(0f, 0f, (int)(Constants.WALL_SIZE * 3.25), (int)(Constants.WALL_SIZE * 0.75), Constants.WALL_SIZE, Constants.WALL_SIZE, "2", this::setBrush, ""));
 
         editorPanel = mapEditor;
 
         eventEditor.delete();
         objectEditor.delete();
 
-        new Barrier(-Game.WALL_SIZE, -Game.WALL_SIZE, Game.WALL_SIZE, mapSize * Game.WALL_SIZE + 100);
-        new Barrier(-Game.WALL_SIZE, 0, mapSize * Game.WALL_SIZE + 100, Game.WALL_SIZE);
-        new Barrier(mapSize * Game.WALL_SIZE , -Game.WALL_SIZE, Game.WALL_SIZE, mapSize * Game.WALL_SIZE + 100);
-        new Barrier(-Game.WALL_SIZE, mapSize * Game.WALL_SIZE + Game.WALL_SIZE, mapSize * Game.WALL_SIZE + 100, Game.WALL_SIZE);
+        new Barrier(-Constants.WALL_SIZE, -Constants.WALL_SIZE, Constants.WALL_SIZE, mapSize * Constants.WALL_SIZE + 100);
+        new Barrier(-Constants.WALL_SIZE, 0, mapSize * Constants.WALL_SIZE + 100, Constants.WALL_SIZE);
+        new Barrier(mapSize * Constants.WALL_SIZE , -Constants.WALL_SIZE, Constants.WALL_SIZE, mapSize * Constants.WALL_SIZE + 100);
+        new Barrier(-Constants.WALL_SIZE, mapSize * Constants.WALL_SIZE + Constants.WALL_SIZE, mapSize * Constants.WALL_SIZE + 100, Constants.WALL_SIZE);
     }
 
 
@@ -109,8 +109,8 @@ public class GameEditor implements Scene {
     public void draw() {
         if(Game.INPUT.isButtonPressed(Input.Buttons.LEFT)) {
             int[] offset  = getOffset();
-            int xClick = (Gdx.input.getX() - offset[0]) / Game.WALL_SIZE;
-            int yClick = ((Gdx.graphics.getHeight() - Gdx.input.getY()) - offset[1]) / Game.WALL_SIZE;
+            int xClick = (Gdx.input.getX() - offset[0]) / Constants.WALL_SIZE;
+            int yClick = ((Gdx.graphics.getHeight() - Gdx.input.getY()) - offset[1]) / Constants.WALL_SIZE;
 
             map.setPos(xClick, yClick, brush);
         }

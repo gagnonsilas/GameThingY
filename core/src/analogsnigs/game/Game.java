@@ -20,7 +20,6 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 public class Game extends ApplicationAdapter {
 	SpriteBatch batch;
 
-	public static final int WALL_SIZE = 64;
 	public static boolean isMobile = false;
 	public static Scene currentScene;
 	public static Texture TEXTURE_SHEET;

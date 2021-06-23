@@ -1,12 +1,11 @@
 package analogsnigs.game.menu;
 
 import analogsnigs.game.Game;
+import analogsnigs.game.utilities.Constants;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
-
-import java.util.function.Consumer;
 
 
 public class MenuPanel {
@@ -21,8 +20,8 @@ public class MenuPanel {
             uiElements.add(new UIGraphicElement(
                     0.5f,
                     0.5f,
-                    8 * Game.WALL_SIZE,
-                    8 * Game.WALL_SIZE,
+                    8 * Constants.WALL_SIZE,
+                    8 * Constants.WALL_SIZE,
                     2, new TextureRegion(Game.MENU_PANEL, 0, 0, 16*8, 16*8)));
         }
     }
@@ -45,8 +44,7 @@ public class MenuPanel {
         }
     }
 
-    public Button addButton(float x, float y, int xOffset, int yOffset, int width, int height, String text, Consumer<String> method, String buttonText) {
-        Button button = new Button(x, y, xOffset, yOffset, width, height, text, method, buttonText, hasBackgroundPanel);
+    public Button addButton(Button button) {
         buttons.add(button);
         return button;
     }

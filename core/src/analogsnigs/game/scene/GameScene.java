@@ -2,12 +2,14 @@ package analogsnigs.game.scene;
 
 import analogsnigs.game.Game;
 import analogsnigs.game.client.Client;
+import analogsnigs.game.menu.Button;
 import analogsnigs.game.player.Character;
 import analogsnigs.game.gameobjects.GameObject;
 import analogsnigs.game.menu.MenuPanel;
 import analogsnigs.game.menu.UIElement;
 import analogsnigs.game.player.Player;
 import analogsnigs.game.utilities.Collider;
+import analogsnigs.game.utilities.Constants;
 import com.badlogic.gdx.Gdx;
 
 public class GameScene implements Scene{
@@ -20,11 +22,11 @@ public class GameScene implements Scene{
 
     public GameScene(String name) {
         // Create characters client instance and menus
-        player = new Player(new Character(100, 100, (Game.WALL_SIZE / 4) * 3, (Game.WALL_SIZE / 4) * 3, name, (int) Math.round(Math.random() * 360)));
+        player = new Player(new Character(100, 100, (Constants.WALL_SIZE / 4) * 3, (Constants.WALL_SIZE / 4) * 3, name, (int) Math.round(Math.random() * 360)));
         client = new Client(this);
         panel = new MenuPanel();
-        panel.addButton(0f, 1f, (int)(Game.WALL_SIZE * 0.75), (int)(-Game.WALL_SIZE * 0.75), Game.WALL_SIZE, Game.WALL_SIZE, ",", this::disconnect, "X");
-        panel.addButton(0f, 1f, (Game.WALL_SIZE * 2), (int)(-Game.WALL_SIZE * 0.75), Game.WALL_SIZE, Game.WALL_SIZE, ",", client::interact, "I");
+        panel.addButton(new Button(0f, 1f, (int)(Constants.WALL_SIZE * 0.75), (int)(-Constants.WALL_SIZE * 0.75), Constants.WALL_SIZE, Constants.WALL_SIZE, ",", this::disconnect, "X"));
+        panel.addButton(new Button(0f, 1f, (Constants.WALL_SIZE * 2), (int)(-Constants.WALL_SIZE * 0.75), Constants.WALL_SIZE, Constants.WALL_SIZE, ",", client::interact, "I"));
     }
 
     @Override
