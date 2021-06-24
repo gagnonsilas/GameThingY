@@ -97,6 +97,9 @@ public class Client {
                 addCharacter(player);
             case Constants.SEND_PLAYER:
                 updateCharacter(gson.fromJson(gson.toJson(packet.object), Character.class));
+                break;
+            case Constants.REMOVE_PLAYER:
+                removeCharacter(gson.fromJson(gson.toJson(packet.object), Character.class));
 
             default:
         }
@@ -116,7 +119,6 @@ public class Client {
 
     public void addCharacter(Character player) {
         if (!player.name.equals(Player.character.name)) {
-            System.out.println(player.name + " Joined The Game");
             new Character(
                     player.xPos,
                     player.yPos,
@@ -125,6 +127,12 @@ public class Client {
                     player.name,
                     player.hue
             );
+        }
+    }
+
+    public void removeCharacter(Character player) {
+        if (!player.name.equals(Player.character.name)) {
+            Character.characters.get(player.name).deleteCharacter();
         }
     }
 

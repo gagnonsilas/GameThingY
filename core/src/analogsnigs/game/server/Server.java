@@ -80,8 +80,7 @@ public class Server extends TimerTask {
             public void onClose(WebSocket conn, int code, String reason, boolean remote) {
                 for (Player player : game.players.values()) {
                     if(player.isCorrectSocket(conn)) {
-                        log(player.name + " Disconnected");
-    //                        players.remove(player.name);
+                        removePlayer(player);
                     }
                 }
             }
@@ -93,6 +92,12 @@ public class Server extends TimerTask {
                         player.width,
                         player.height,
                         player.hue);
+            }
+
+            public void removePlayer(Player player) {
+                log(player.name + " Disconnected");
+                game.players.remove(player.name);
+                broadcast(gson.toJson(new Packet(Constants.REMOVE_PLAYER, player)));
             }
 
             @Override
@@ -120,9 +125,7 @@ public class Server extends TimerTask {
                 if(conn != null) {
                     for (Player player : game.players.values()) {
                         if (player.isCorrectSocket(conn)) {
-
-                            log(player.name + " Disconnected");
-                            game.players.remove(player.name);
+                            removePlayer(player);
                         }
                     }
                 }

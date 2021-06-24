@@ -72,9 +72,8 @@ public class Character extends GameObject {
 
     public void deleteCharacter() {
         nameTag.remove();
-
         removeFromDrawable();
-        characters.remove(this);
+        characters.remove(name);
     }
 
     public void setHue(int hue) {
